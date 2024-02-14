@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "ObjMgr.h"
 #include "CollisionMgr.h"
-
-CObjMgr*	CObjMgr::m_pInstance = nullptr;
+#include "GameMgr.h"
+CObjMgr* CObjMgr::m_pInstance = nullptr;
 
 CObjMgr::CObjMgr()
 {
@@ -13,27 +13,29 @@ CObjMgr::~CObjMgr()
 	Release();
 }
 
-void CObjMgr::Add_Object(OBJID eID, CObj * pObj)
+void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 {
+	int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 	if (OBJ_END <= eID || nullptr == pObj)
 		return;
 
-	m_ObjList[eID].push_back(pObj);
+	m_ObjList[iCurrentStage][eID].push_back(pObj);
 }
 
 int CObjMgr::Update()
 {
+	int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
-		for (auto iter = m_ObjList[i].begin();
-			iter != m_ObjList[i].end(); )
+		for (auto iter = m_ObjList[iCurrentStage][i].begin();
+			iter != m_ObjList[iCurrentStage][i].end(); )
 		{
 			int iResult = (*iter)->Update();
 
 			if (OBJ_DEAD == iResult)
 			{
 				Safe_Delete<CObj*>(*iter);
-				iter = m_ObjList[i].erase(iter);
+				iter = m_ObjList[iCurrentStage][i].erase(iter);
 			}
 			else
 				++iter;
@@ -45,26 +47,28 @@ int CObjMgr::Update()
 
 void CObjMgr::Late_Update()
 {
+	int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
-		for (auto& iter : m_ObjList[i])
+		for (auto& iter : m_ObjList[iCurrentStage][i])
 		{
 			iter->Late_Update();
 
-			if (m_ObjList[i].empty())
+			if (m_ObjList[iCurrentStage][i].empty())
 				break;
 		}
 	}
 
-	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_BULLET], m_ObjList[OBJ_MONSTER]);
-	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PLAYER]);
+	CCollisionMgr::Collision_Sphere(m_ObjList[iCurrentStage][OBJ_BULLET], m_ObjList[iCurrentStage][OBJ_MONSTER]);
+	CCollisionMgr::Collision_RectEx(m_ObjList[iCurrentStage][OBJ_MONSTER], m_ObjList[iCurrentStage][OBJ_PLAYER]);
 }
 
 void CObjMgr::Render(HDC hDC)
 {
+	int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
-		for (auto& iter : m_ObjList[i])
+		for (auto& iter : m_ObjList[iCurrentStage][i])
 		{
 			iter->Render(hDC);
 		}
@@ -73,25 +77,27 @@ void CObjMgr::Render(HDC hDC)
 
 void CObjMgr::Release()
 {
+	int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
-		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), Safe_Delete<CObj*>);
-		m_ObjList[i].clear();
+		for_each(m_ObjList[iCurrentStage][i].begin(), m_ObjList[iCurrentStage][i].end(), Safe_Delete<CObj*>);
+		m_ObjList[iCurrentStage][i].clear();
 	}
 
 }
 
-CObj * CObjMgr::Get_Target(OBJID eID, CObj * pObj)
+CObj* CObjMgr::Get_Target(OBJID eID, CObj* pObj)
 {
-	if (m_ObjList[eID].empty())
+	int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
+	if (m_ObjList[iCurrentStage][eID].empty())
 		return nullptr;
 
-	CObj*	pTarget = nullptr;
+	CObj* pTarget = nullptr;
 	float	fDistance(0.f);
 
-	for (auto& iter : m_ObjList[eID])
+	for (auto& iter : m_ObjList[iCurrentStage][eID])
 	{
-		if(iter->Get_Dead())
+		if (iter->Get_Dead())
 			continue;
 
 		float	fWidth = abs(pObj->Get_Info().fX - iter->Get_Info().fX);
@@ -105,6 +111,6 @@ CObj * CObjMgr::Get_Target(OBJID eID, CObj * pObj)
 			fDistance = fDiagonal;
 		}
 	}
-	
+
 	return pTarget;
 }

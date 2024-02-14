@@ -17,7 +17,7 @@ const wchar_t STAGE_3_MAP_PATH[32] = L"../Data/Line3.dat";
 
 enum STAGE
 {
-	STAGE_NONE,
+	STAGE_NONE = -1,
 	STAGE_1,
 	STAGE_2,
 	STAGE_3,
@@ -25,7 +25,7 @@ enum STAGE
 };
 enum DIRECTION
 {
-	DIR_LEFT, 
+	DIR_LEFT,
 	DIR_UP,
 	DIR_RIGHT,
 	DIR_DOWN,
