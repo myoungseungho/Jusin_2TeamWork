@@ -7,10 +7,12 @@
 #include "KeyMgr.h"
 #include "Player.h"
 #include "ScrollMgr.h"
+#include "Stage1.h"
+#include "Stage2.h"
+#include "Stage3.h"
 
 
-CMainGame::CMainGame() : m_iFPS(0), m_dwTime(GetTickCount())
-	//: m_pPlayer(nullptr)
+CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }
@@ -26,17 +28,30 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 
 	CLineMgr::Get_Instance()->Initialize();
-
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
+
+	if (m_pStage1 == nullptr)
+		m_pStage1 = new CStage1;
+	if (m_pStage2 == nullptr)
+		m_pStage2 = new CStage2;
+	if (m_pStage3 == nullptr)
+		m_pStage3 = new CStage3;
+
+	//각자 스테이지에서 Init
+	//EX) m_pStage1->Initialize();
 }
 
 void CMainGame::Update()
 {
+	//각자 스테이지에서 Update
+	//EX) m_pStage1->Update();
 	CObjMgr::Get_Instance()->Update();
 }
 
 void CMainGame::Late_Update()
 {
+	//각자 스테이지에서 Late_Update
+	//EX) m_pStage1->Late_Update();
 	CObjMgr::Get_Instance()->Late_Update();
 }
 
@@ -52,21 +67,29 @@ void CMainGame::Render()
 		m_iFPS = 0;
 		m_dwTime = GetTickCount();
 	}
-	
-	Rectangle(m_hDC, 0, 0, WINCX, WINCY);	
+
+	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
+
+	//각자 스테이지에서 Render
+	//EX) m_pStage1->Render();
 
 	CLineMgr::Get_Instance()->Render(m_hDC);
 	CObjMgr::Get_Instance()->Render(m_hDC);
-	
-
 }
 
 void CMainGame::Release()
-{	
+{
+	//각자 스테이지에서 Release
+	//EX) m_pStage1->Release();
+
 	CScrollMgr::Get_Instance()->Destroy_Instance();
 	CKeyMgr::Get_Instance()->Destroy_Instance();
 	CLineMgr::Get_Instance()->Destroy_Instance();
 	CObjMgr::Get_Instance()->Destroy_Instance();
-	ReleaseDC(g_hWnd, m_hDC);	
+
+	Safe_Delete(m_pStage1);
+	Safe_Delete(m_pStage2);
+	Safe_Delete(m_pStage3);
+	ReleaseDC(g_hWnd, m_hDC);
 }
 

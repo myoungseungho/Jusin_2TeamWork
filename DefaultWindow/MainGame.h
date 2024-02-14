@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Define.h"
-
+#include "Stage.h"
 
 class CMainGame
 {
@@ -23,10 +23,9 @@ private:
 	int				m_iFPS;
 	TCHAR			m_szFPS[16];
 
-#pragma region 복습
-	//CObj*		m_pPlayer;
-	//list<CObj*>	m_BulletList;
-#pragma endregion 복습
-	
+private:
+	CStage* m_pStage1;
+	CStage* m_pStage2;
+	CStage* m_pStage3;
 };
 
