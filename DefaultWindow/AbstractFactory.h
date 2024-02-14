@@ -18,6 +18,7 @@ public:
 		return pObj;
 	}
 
+
 	static CObj*		Create(float _fX, float _fY)
 	{
 		CObj*		pObj = new T;

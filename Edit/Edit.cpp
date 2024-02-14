@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "Edit.h"
 #include "MainGame.h"
-
 #define MAX_LOADSTRING 100
 
 HWND		g_hWnd;

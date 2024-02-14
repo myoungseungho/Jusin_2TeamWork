@@ -11,6 +11,18 @@
 
 #define			VK_MAX		0xff
 
+const wchar_t STAGE_1_MAP_PATH[32] = L"../Data/Line1.dat";
+const wchar_t STAGE_2_MAP_PATH[32] = L"../Data/Line2.dat";
+const wchar_t STAGE_3_MAP_PATH[32] = L"../Data/Line3.dat";
+
+enum STAGE
+{
+	STAGE_NONE,
+	STAGE_1,
+	STAGE_2,
+	STAGE_3,
+	STAGE_END
+};
 enum DIRECTION
 {
 	DIR_LEFT, 
@@ -79,3 +91,4 @@ void Safe_Delete(T& Temp)
 }
 
 extern HWND		g_hWnd;
+

@@ -10,7 +10,7 @@
 #include "Stage1.h"
 #include "Stage2.h"
 #include "Stage3.h"
-
+#include "GameMgr.h"
 
 CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr)
 {
@@ -28,7 +28,6 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 
 	CLineMgr::Get_Instance()->Initialize();
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
 
 	if (m_pStage1 == nullptr)
 		m_pStage1 = new CStage1;
@@ -37,22 +36,19 @@ void CMainGame::Initialize()
 	if (m_pStage3 == nullptr)
 		m_pStage3 = new CStage3;
 
-	//각자 스테이지에서 Init
-	//EX) m_pStage1->Initialize();
+	m_pStage3->Initialize();
 }
 
 void CMainGame::Update()
 {
-	//각자 스테이지에서 Update
-	//EX) m_pStage1->Update();
 	CObjMgr::Get_Instance()->Update();
+	m_pStage3->Update();
 }
 
 void CMainGame::Late_Update()
 {
-	//각자 스테이지에서 Late_Update
-	//EX) m_pStage1->Late_Update();
 	CObjMgr::Get_Instance()->Late_Update();
+	m_pStage3->Late_Update();
 }
 
 void CMainGame::Render()
@@ -70,8 +66,7 @@ void CMainGame::Render()
 
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 
-	//각자 스테이지에서 Render
-	//EX) m_pStage1->Render();
+	m_pStage3->Render();
 
 	CLineMgr::Get_Instance()->Render(m_hDC);
 	CObjMgr::Get_Instance()->Render(m_hDC);
@@ -79,14 +74,11 @@ void CMainGame::Render()
 
 void CMainGame::Release()
 {
-	//각자 스테이지에서 Release
-	//EX) m_pStage1->Release();
-
 	CScrollMgr::Get_Instance()->Destroy_Instance();
 	CKeyMgr::Get_Instance()->Destroy_Instance();
 	CLineMgr::Get_Instance()->Destroy_Instance();
 	CObjMgr::Get_Instance()->Destroy_Instance();
-
+	CGameMgr::Get_Instance()->Destroy_Instance();
 	Safe_Delete(m_pStage1);
 	Safe_Delete(m_pStage2);
 	Safe_Delete(m_pStage3);

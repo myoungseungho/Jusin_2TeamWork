@@ -3,7 +3,7 @@
 #include "KeyMgr.h"
 #include "ScrollMgr.h"
 
-CLineMgr*	CLineMgr::m_pInstance = NULL;
+CLineMgr* CLineMgr::m_pInstance = NULL;
 
 CLineMgr::CLineMgr()
 {
@@ -17,7 +17,7 @@ CLineMgr::~CLineMgr()
 
 void CLineMgr::Initialize(void)
 {
-	
+
 }
 
 void CLineMgr::Update()
@@ -41,7 +41,7 @@ void CLineMgr::Update()
 		{
 			m_tLinePoint[RIGHT].fX = (float)ptMouse.x;
 			m_tLinePoint[RIGHT].fY = (float)ptMouse.y;
-						
+
 			m_Linelist.push_back(new CLine(m_tLinePoint[LEFT], m_tLinePoint[RIGHT]));
 
 			m_tLinePoint[LEFT].fX = m_tLinePoint[RIGHT].fX;
@@ -79,12 +79,12 @@ void CLineMgr::Release()
 	m_Linelist.clear();
 }
 
-bool CLineMgr::Collision_Line(float _fX, float * pY)
+bool CLineMgr::Collision_Line(float _fX, float* pY)
 {
 	if (m_Linelist.empty())
 		return false;
 
-	CLine*		pTarget = nullptr;
+	CLine* pTarget = nullptr;
 
 	for (auto& iter : m_Linelist)
 	{
@@ -112,13 +112,13 @@ bool CLineMgr::Collision_Line(float _fX, float * pY)
 
 void CLineMgr::Save_Line()
 {
-	HANDLE	hFile = CreateFile(L"../Data/Line.dat", // 파일 경로(이름을 명시)
-								GENERIC_WRITE,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
-								NULL,				// 공유 방식, 파일이 열려 있는 상태에서 다른 프로세스가 오픈할 때 허용할 지 여부
-								NULL,				// 보안 속성, NULL일 경우 기본 설정 사용
-								CREATE_ALWAYS,		// CREATE_ALWAYS : 파일이 없다면 생성, 있다면 덮어쓰기, OPEN_EXISTING : 파일이 있을 경우에만 연다
-								FILE_ATTRIBUTE_NORMAL,	// 파일 속성, 아무런 속성이 없는 파일을 생성
-								NULL);				// 생성될 파일의 속성을 제공할 템플릿 파일
+	HANDLE	hFile = CreateFile(STAGE_1_MAP_PATH, // 파일 경로(이름을 명시)
+		GENERIC_WRITE,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
+		NULL,				// 공유 방식, 파일이 열려 있는 상태에서 다른 프로세스가 오픈할 때 허용할 지 여부
+		NULL,				// 보안 속성, NULL일 경우 기본 설정 사용
+		CREATE_ALWAYS,		// CREATE_ALWAYS : 파일이 없다면 생성, 있다면 덮어쓰기, OPEN_EXISTING : 파일이 있을 경우에만 연다
+		FILE_ATTRIBUTE_NORMAL,	// 파일 속성, 아무런 속성이 없는 파일을 생성
+		NULL);				// 생성될 파일의 속성을 제공할 템플릿 파일
 
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
@@ -140,7 +140,7 @@ void CLineMgr::Save_Line()
 
 void CLineMgr::Load_Line()
 {
-	HANDLE	hFile = CreateFile(L"../Data/Line.dat", // 파일 경로(이름을 명시)
+	HANDLE	hFile = CreateFile(STAGE_1_MAP_PATH, // 파일 경로(이름을 명시)
 		GENERIC_READ,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,				// 공유 방식, 파일이 열려 있는 상태에서 다른 프로세스가 오픈할 때 허용할 지 여부
 		NULL,				// 보안 속성, NULL일 경우 기본 설정 사용
@@ -158,7 +158,7 @@ void CLineMgr::Load_Line()
 
 	LINEINFO		tInfo{};
 
-	while(true)
+	while (true)
 	{
 		ReadFile(hFile, &tInfo, sizeof(LINEINFO), &dwByte, NULL);
 

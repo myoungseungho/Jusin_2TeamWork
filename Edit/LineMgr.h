@@ -43,6 +43,5 @@ private:
 	list<CLine*>			m_Linelist;
 
 	LINEPOINT				m_tLinePoint[END];
-
 };
 

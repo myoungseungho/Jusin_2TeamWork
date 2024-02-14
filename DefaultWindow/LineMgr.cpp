@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "LineMgr.h"
-
-CLineMgr*	CLineMgr::m_pInstance = NULL;
+#include "GameMgr.h"
+CLineMgr* CLineMgr::m_pInstance = NULL;
 
 CLineMgr::CLineMgr()
 {
@@ -16,7 +16,7 @@ void CLineMgr::Initialize(void)
 {
 	/*LINEPOINT		tLinePoint[4]
 	{
-		{ 100.f, 450.f }, 
+		{ 100.f, 450.f },
 		{ 300.f, 450.f },
 		{ 500.f, 250.f },
 		{ 700.f, 250.f }
@@ -41,12 +41,12 @@ void CLineMgr::Release()
 	m_Linelist.clear();
 }
 
-bool CLineMgr::Collision_Line(float _fX, float * pY)
+bool CLineMgr::Collision_Line(float _fX, float* pY)
 {
 	if (m_Linelist.empty())
 		return false;
 
-	CLine*		pTarget = nullptr;
+	CLine* pTarget = nullptr;
 
 	for (auto& iter : m_Linelist)
 	{
@@ -74,7 +74,28 @@ bool CLineMgr::Collision_Line(float _fX, float * pY)
 
 void CLineMgr::Load_Line()
 {
-	HANDLE	hFile = CreateFile(L"../Data/Line.dat", // 파일 경로(이름을 명시)
+	STAGE currentStage = CGameMgr::Get_Instance()->GetCurrentStage();
+
+	wchar_t currentPath[32];
+	memset(currentPath, 0, sizeof(currentPath));
+
+	switch (currentStage)
+	{
+	case STAGE_1:
+		wcscpy_s(currentPath, STAGE_1_MAP_PATH);
+		break;
+	case STAGE_2:
+		wcscpy_s(currentPath, STAGE_2_MAP_PATH);
+		break;
+	case STAGE_3:
+		wcscpy_s(currentPath, STAGE_3_MAP_PATH);
+		break;
+	default:
+		return;
+	}
+
+
+	HANDLE	hFile = CreateFile(currentPath, // 파일 경로(이름을 명시)
 		GENERIC_READ,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,				// 공유 방식, 파일이 열려 있는 상태에서 다른 프로세스가 오픈할 때 허용할 지 여부
 		NULL,				// 보안 속성, NULL일 경우 기본 설정 사용

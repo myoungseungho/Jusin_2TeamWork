@@ -67,6 +67,9 @@
     <Filter Include="03. Stage">
       <UniqueIdentifier>{765d6f1e-af90-489d-a614-9579ee1cda9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Design\06. GameMgr">
+      <UniqueIdentifier>{b1bfe2bb-2deb-4d0c-9b2e-f482cf059c9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -153,6 +156,9 @@
     <ClInclude Include="Player_Stage2.h">
       <Filter>01. Obj\00. Player</Filter>
     </ClInclude>
+    <ClInclude Include="GameMgr.h">
+      <Filter>02. Design\06. GameMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -226,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="Player_Stage3.cpp">
       <Filter>01. Obj\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMgr.cpp">
+      <Filter>02. Design\06. GameMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
