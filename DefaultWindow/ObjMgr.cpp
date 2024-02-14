@@ -16,7 +16,8 @@ CObjMgr::~CObjMgr()
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 {
 	int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
-	if (OBJ_END <= eID || nullptr == pObj)
+
+	if (OBJ_END <= eID || nullptr == pObj || iCurrentStage <= STAGE_NONE || iCurrentStage >= STAGE_END)
 		return;
 
 	m_ObjList[iCurrentStage][eID].push_back(pObj);
@@ -25,6 +26,7 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 int CObjMgr::Update()
 {
 	int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
+
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
 		for (auto iter = m_ObjList[iCurrentStage][i].begin();

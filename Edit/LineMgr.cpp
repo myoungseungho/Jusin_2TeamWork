@@ -112,7 +112,7 @@ bool CLineMgr::Collision_Line(float _fX, float* pY)
 
 void CLineMgr::Save_Line()
 {
-	HANDLE	hFile = CreateFile(STAGE_1_MAP_PATH, // 파일 경로(이름을 명시)
+	HANDLE	hFile = CreateFile(STAGE_3_MAP_PATH, // 파일 경로(이름을 명시)
 		GENERIC_WRITE,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,				// 공유 방식, 파일이 열려 있는 상태에서 다른 프로세스가 오픈할 때 허용할 지 여부
 		NULL,				// 보안 속성, NULL일 경우 기본 설정 사용
@@ -140,7 +140,7 @@ void CLineMgr::Save_Line()
 
 void CLineMgr::Load_Line()
 {
-	HANDLE	hFile = CreateFile(STAGE_1_MAP_PATH, // 파일 경로(이름을 명시)
+	HANDLE	hFile = CreateFile(STAGE_3_MAP_PATH, // 파일 경로(이름을 명시)
 		GENERIC_READ,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,				// 공유 방식, 파일이 열려 있는 상태에서 다른 프로세스가 오픈할 때 허용할 지 여부
 		NULL,				// 보안 속성, NULL일 경우 기본 설정 사용
