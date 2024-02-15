@@ -1,12 +1,16 @@
 #include "stdafx.h"
 #include "Item_Stage3.h"
-
+#include "LineMgr.h"
+#include "ScrollMgr.h"
 void CItem_Stage3::Initialize()
 {
+	m_tInfo.fCX = 20.f;
+	m_tInfo.fCY = 20.f;
 }
 
 int CItem_Stage3::Update()
 {
+	__super::Update_Rect();
 	return 0;
 }
 
@@ -16,10 +20,12 @@ void CItem_Stage3::Late_Update()
 
 void CItem_Stage3::Render(HDC hDC)
 {
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+
 	Rectangle(hDC,
-		m_tRect.left,
+		m_tRect.left+ iScrollX,
 		m_tRect.top,
-		m_tRect.right,
+		m_tRect.right+ iScrollX,
 		m_tRect.bottom);
 }
 

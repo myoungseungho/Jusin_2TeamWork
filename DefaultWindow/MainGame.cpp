@@ -41,8 +41,8 @@ void CMainGame::Initialize()
 
 void CMainGame::Update()
 {
-	CObjMgr::Get_Instance()->Update();
 	m_pStage3->Update();
+	CObjMgr::Get_Instance()->Update();
 }
 
 void CMainGame::Late_Update()

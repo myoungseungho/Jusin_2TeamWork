@@ -52,7 +52,6 @@ void CPlayer::Late_Update()
 
 void CPlayer::Render(HDC hDC)
 {
-
 	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
 	Rectangle(hDC, 

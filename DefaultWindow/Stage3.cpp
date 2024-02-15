@@ -41,23 +41,34 @@ void CStage3::Release()
 
 void CStage3::ItemSpawn()
 {
-	if (!(m_Line_Item_List_Copy->size() >= 2))
+	if ((m_Line_Item_List_Copy->size() < 2))
 		return;
 
-	CLine* firstLine = m_Line_Item_List_Copy->front();
-	CLine* backLine = m_Line_Item_List_Copy->back();
+	list<CLine*> Line_List = *m_Line_Item_List_Copy;
+	vector<FLOATPOINT> vecPoint;
+	int iItemNumber = 3;
 
-	LINEPOINT firstLinePoint = firstLine->Get_Info().tLeft;
-	LINEPOINT LastLinePoint = backLine->Get_Info().tRight;
-
-	/*float firstLinePointX = firstLine->Get_Info().tLeft.fX;
-	float LastLinePointX = firstLine->Get_Info().tRight.fX;*/
-
-	float fInterval = 0.f;
-	for (size_t i = 0; i < 10; i++)
+	for (auto iter : Line_List)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem_Stage3>::Create(firstLinePoint.fX + fInterval, firstLinePoint.fY + 100.f));
-		fInterval += 30.f;
+		float x1 = iter->Get_Info().tLeft.fX;
+		float y1 = iter->Get_Info().tLeft.fY;
+		float x2 = iter->Get_Info().tRight.fX;
+		float y2 = iter->Get_Info().tRight.fY;
+
+		float fInterval = abs(x2 - x1) / (float)iItemNumber;
+
+		for (size_t i = 0; i < iItemNumber; i++)
+		{
+			float x = x1 + (i * fInterval);
+			float y = ((y2 - y1) / (x2 - x1)) * (x - x1) + y1;
+			FLOATPOINT tempPoint{ x , y };
+			vecPoint.push_back(tempPoint);
+		}
+	}
+
+	for (auto iter : vecPoint)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem_Stage3>::Create(iter.fX, iter.fY));
 	}
 }
 

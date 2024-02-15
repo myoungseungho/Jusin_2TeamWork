@@ -15,18 +15,6 @@ CLineMgr::~CLineMgr()
 
 void CLineMgr::Initialize(void)
 {
-	/*LINEPOINT		tLinePoint[4]
-	{
-		{ 100.f, 450.f },
-		{ 300.f, 450.f },
-		{ 500.f, 250.f },
-		{ 700.f, 250.f }
-	};
-
-	m_Linelist.push_back(new CLine(tLinePoint[0], tLinePoint[1]));
-	m_Linelist.push_back(new CLine(tLinePoint[1], tLinePoint[2]));
-	m_Linelist.push_back(new CLine(tLinePoint[2], tLinePoint[3]));*/
-
 	Load_Line();
 }
 
@@ -47,6 +35,7 @@ void CLineMgr::Release()
 	for_each(m_Line_Item_List.begin(), m_Line_Item_List.end(), Safe_Delete<CLine*>);
 	m_Line_Item_List.clear();
 }
+
 
 bool CLineMgr::Collision_Line(float _fX, float* pY)
 {
