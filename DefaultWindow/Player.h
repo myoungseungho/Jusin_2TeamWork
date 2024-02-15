@@ -18,8 +18,8 @@ public:
 	virtual void Release() override;
 
 protected:
-	void		Key_Input();
-	void		Jump();
+	virtual void		Key_Input();
+	virtual void		Jump();
 	void		OffSet();
 
 

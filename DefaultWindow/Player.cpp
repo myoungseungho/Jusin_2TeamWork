@@ -32,8 +32,6 @@ void CPlayer::Initialize()
 
 int CPlayer::Update()
 {
-	Key_Input();
-	
 	__super::Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -46,7 +44,6 @@ void CPlayer::Late_Update()
 	//m_tPosin.x = LONG(m_tInfo.fX + m_fDistance * cos(m_fAngle * (PI / 180.f)));
 	//m_tPosin.y = LONG(m_tInfo.fY - m_fDistance * sin(m_fAngle * (PI / 180.f)));
 
-	Jump();
 	OffSet();
 }
 
