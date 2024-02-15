@@ -5,7 +5,7 @@
 
 CLineMgr* CLineMgr::m_pInstance = NULL;
 
-CLineMgr::CLineMgr() : m_currentLineMode(LINE_ITEM_MODE)
+CLineMgr::CLineMgr() : m_currentLineMode(LINEMODE)
 {
 	ZeroMemory(m_tLinePoint, sizeof(m_tLinePoint));
 }
@@ -17,7 +17,6 @@ CLineMgr::~CLineMgr()
 
 void CLineMgr::Initialize(void)
 {
-
 }
 
 void CLineMgr::Update()
