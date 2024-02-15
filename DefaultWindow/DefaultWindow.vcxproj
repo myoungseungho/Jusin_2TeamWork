@@ -154,6 +154,8 @@
     <ClInclude Include="DefaultWindow.h" />
     <ClInclude Include="GameMgr.h" />
     <ClInclude Include="GuideBullet.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Item_Stage3.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineMgr.h" />
@@ -184,6 +186,8 @@
     <ClCompile Include="DefaultWindow.cpp" />
     <ClCompile Include="GameMgr.cpp" />
     <ClCompile Include="GuideBullet.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Item_Stage3.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineMgr.cpp" />

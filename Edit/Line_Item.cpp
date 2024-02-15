@@ -1,9 +1,8 @@
+#include "Line_Item.h"
+#include "Line_Item.h"
 #include "stdafx.h"
 #include "Line_Item.h"
 
-CLine_Item::CLine_Item()
-{
-}
 
 CLine_Item::~CLine_Item()
 {

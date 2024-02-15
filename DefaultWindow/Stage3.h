@@ -1,5 +1,6 @@
 #pragma once
 #include "Stage.h"
+#include "Line.h"
 class CStage3 : public CStage
 {
 public:
@@ -13,5 +14,12 @@ public:
 	void Late_Update() override;
 	void Render() override;
 	void Release() override;
+public:
+	void ItemSpawn();
+
+private:
+	list<CLine*>* m_Line_Item_List_Copy;
 };
+
+
 

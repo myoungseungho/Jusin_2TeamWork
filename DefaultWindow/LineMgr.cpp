@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LineMgr.h"
 #include "GameMgr.h"
+#include "Line_Item.h"
 CLineMgr* CLineMgr::m_pInstance = NULL;
 
 CLineMgr::CLineMgr()
@@ -177,7 +178,7 @@ void CLineMgr::Load_Stage3_Line()
 			break;
 
 		m_Linelist.push_back(new CLine(tInfo));
-		m_Line_Item_List.push_back(new CLine(tInfo_Line_Item));
+		m_Line_Item_List.push_back(new CLine_Item(tInfo_Line_Item));
 	}
 
 	CloseHandle(hFile);

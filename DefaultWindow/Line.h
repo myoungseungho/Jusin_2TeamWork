@@ -17,7 +17,7 @@ public:
 	const LINEINFO&		Get_Info() const { return m_tInfo; }
 
 
-private:
+protected:
 	LINEINFO		m_tInfo;
 };
 
