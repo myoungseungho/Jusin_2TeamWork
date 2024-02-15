@@ -5,7 +5,7 @@
 
 CLineMgr* CLineMgr::m_pInstance = NULL;
 
-CLineMgr::CLineMgr()
+CLineMgr::CLineMgr() : m_currentLineMode(LINE_ITEM_MODE)
 {
 	ZeroMemory(m_tLinePoint, sizeof(m_tLinePoint));
 }
@@ -42,7 +42,17 @@ void CLineMgr::Update()
 			m_tLinePoint[RIGHT].fX = (float)ptMouse.x;
 			m_tLinePoint[RIGHT].fY = (float)ptMouse.y;
 
-			m_Linelist.push_back(new CLine(m_tLinePoint[LEFT], m_tLinePoint[RIGHT]));
+			switch (m_currentLineMode)
+			{
+			case LINEMODE:
+				m_Linelist.push_back(new CLine(m_tLinePoint[LEFT], m_tLinePoint[RIGHT]));
+				break;
+			case LINE_ITEM_MODE:
+				m_Line_Item_List.push_back(new CLine(m_tLinePoint[LEFT], m_tLinePoint[RIGHT]));
+				break;
+			default:
+				break;
+			}
 
 			m_tLinePoint[LEFT].fX = m_tLinePoint[RIGHT].fX;
 			m_tLinePoint[LEFT].fY = m_tLinePoint[RIGHT].fY;
@@ -71,12 +81,18 @@ void CLineMgr::Render(HDC hDC)
 {
 	for (auto& iter : m_Linelist)
 		iter->Render(hDC);
+
+	for (auto& iter : m_Line_Item_List)
+		iter->Render(hDC);
 }
 
 void CLineMgr::Release()
 {
 	for_each(m_Linelist.begin(), m_Linelist.end(), Safe_Delete<CLine*>);
 	m_Linelist.clear();
+
+	for_each(m_Line_Item_List.begin(), m_Line_Item_List.end(), Safe_Delete<CLine*>);
+	m_Line_Item_List.clear();
 }
 
 bool CLineMgr::Collision_Line(float _fX, float* pY)
@@ -112,7 +128,7 @@ bool CLineMgr::Collision_Line(float _fX, float* pY)
 
 void CLineMgr::Save_Line()
 {
-	HANDLE	hFile = CreateFile(STAGE_3_MAP_PATH, // 파일 경로(이름을 명시)
+	HANDLE	hFile = CreateFile(m_currentLineMode == LINEMODE ? STAGE_3_MAP_PATH : STAGE_3_Item_MAP_PATH, // 파일 경로(이름을 명시)
 		GENERIC_WRITE,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,				// 공유 방식, 파일이 열려 있는 상태에서 다른 프로세스가 오픈할 때 허용할 지 여부
 		NULL,				// 보안 속성, NULL일 경우 기본 설정 사용
@@ -126,17 +142,21 @@ void CLineMgr::Save_Line()
 		return;
 	}
 
+
 	DWORD	dwByte(0);
 
-	for (auto& iter : m_Linelist)
+	for (auto& iter : m_currentLineMode == LINEMODE ? m_Linelist : m_Line_Item_List)
 	{
 		WriteFile(hFile, &(iter->Get_Info()), sizeof(LINEINFO), &dwByte, NULL);
 	}
+
 
 	CloseHandle(hFile);
 
 	MessageBox(g_hWnd, _T("Save 완료"), L"성공", MB_OK);
 }
+
+
 
 void CLineMgr::Load_Line()
 {
@@ -148,27 +168,42 @@ void CLineMgr::Load_Line()
 		FILE_ATTRIBUTE_NORMAL,	// 파일 속성, 아무런 속성이 없는 파일을 생성
 		NULL);				// 생성될 파일의 속성을 제공할 템플릿 파일
 
-	if (INVALID_HANDLE_VALUE == hFile)
+	HANDLE	hFile_Item = CreateFile(STAGE_3_Item_MAP_PATH, // 파일 경로(이름을 명시)
+		GENERIC_READ,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
+		NULL,				// 공유 방식, 파일이 열려 있는 상태에서 다른 프로세스가 오픈할 때 허용할 지 여부
+		NULL,				// 보안 속성, NULL일 경우 기본 설정 사용
+		OPEN_EXISTING,		// CREATE_ALWAYS : 파일이 없다면 생성, 있다면 덮어쓰기, OPEN_EXISTING : 파일이 있을 경우에만 연다
+		FILE_ATTRIBUTE_NORMAL,	// 파일 속성, 아무런 속성이 없는 파일을 생성
+		NULL);				// 생성될 파일의 속성을 제공할 템플릿 파일
+
+	if (INVALID_HANDLE_VALUE == hFile || INVALID_HANDLE_VALUE == hFile_Item)
 	{
 		MessageBox(g_hWnd, _T("Load File"), L"Fail", MB_OK);
 		return;
 	}
 
+
 	DWORD	dwByte(0);
+	DWORD	dwByte_Item(0);
+
 
 	LINEINFO		tInfo{};
+	LINEINFO		tInfo_Line_Item{};
 
 	while (true)
 	{
+		ReadFile(hFile_Item, &tInfo_Line_Item, sizeof(LINEINFO), &dwByte_Item, NULL);
 		ReadFile(hFile, &tInfo, sizeof(LINEINFO), &dwByte, NULL);
 
-		if (0 == dwByte)
+		if (0 == dwByte || 0 == dwByte_Item)
 			break;
 
 		m_Linelist.push_back(new CLine(tInfo));
+		m_Line_Item_List.push_back(new CLine(tInfo_Line_Item));
 	}
 
 	CloseHandle(hFile);
 
 	MessageBox(g_hWnd, _T("Load 완료"), L"성공", MB_OK);
 }
+

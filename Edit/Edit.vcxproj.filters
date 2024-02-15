@@ -60,6 +60,9 @@
     <ClInclude Include="ScrollMgr.h">
       <Filter>03. ScrollMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Line_Item.h">
+      <Filter>01. LineMgr\Line</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -82,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="ScrollMgr.cpp">
       <Filter>03. ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Line_Item.cpp">
+      <Filter>01. LineMgr\Line</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

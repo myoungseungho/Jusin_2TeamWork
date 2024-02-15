@@ -15,6 +15,8 @@ public:
 
 	bool		Collision_Line(float _fX, float* pY);
 	void		Load_Line();
+	void		Load_Stage1_And_Stage2_Line(STAGE);
+	void		Load_Stage3_Line();
 
 public:
 	static		CLineMgr*		Get_Instance()
@@ -38,7 +40,7 @@ public:
 private:
 	static CLineMgr*		m_pInstance;
 	list<CLine*>			m_Linelist;
-
+	list<CLine*>			m_Line_Item_List;
 
 };
 

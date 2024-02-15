@@ -70,6 +70,9 @@
     <Filter Include="02. Design\06. GameMgr">
       <UniqueIdentifier>{b1bfe2bb-2deb-4d0c-9b2e-f482cf059c9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Design\03. LineMgr\Line\Line_Item">
+      <UniqueIdentifier>{0563ff5c-982a-45d6-a320-fc9dc25bb6a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -159,6 +162,9 @@
     <ClInclude Include="GameMgr.h">
       <Filter>02. Design\06. GameMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Line_Item.h">
+      <Filter>02. Design\03. LineMgr\Line\Line_Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -235,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="GameMgr.cpp">
       <Filter>02. Design\06. GameMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Line_Item.cpp">
+      <Filter>02. Design\03. LineMgr\Line\Line_Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

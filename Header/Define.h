@@ -14,6 +14,7 @@
 const wchar_t STAGE_1_MAP_PATH[32] = L"../Data/Line1.dat";
 const wchar_t STAGE_2_MAP_PATH[32] = L"../Data/Line2.dat";
 const wchar_t STAGE_3_MAP_PATH[32] = L"../Data/Line3.dat";
+const wchar_t STAGE_3_Item_MAP_PATH[32] = L"../Data/Line_Item_3.dat";
 
 enum STAGE
 {
@@ -49,6 +50,11 @@ enum DIRECTION2
 	LEFT, RIGHT, END
 };
 
+enum LINEEDITMODE
+{
+	LINEMODE,
+	LINE_ITEM_MODE
+};
 
 typedef struct tagInfo
 {

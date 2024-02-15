@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Line.h"
-
-class CLineMgr
+#include "Line_Item.h"
+class CLineMgr 
 {
 private:
 	CLineMgr();
@@ -18,6 +18,7 @@ public:
 
 	void		Save_Line();
 	void		Load_Line();
+
 
 public:
 	static		CLineMgr*		Get_Instance()
@@ -41,7 +42,8 @@ public:
 private:
 	static CLineMgr*		m_pInstance;
 	list<CLine*>			m_Linelist;
-
+	list<CLine*>			m_Line_Item_List;
 	LINEPOINT				m_tLinePoint[END];
+	LINEEDITMODE			m_currentLineMode;
 };
 

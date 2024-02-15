@@ -11,7 +11,7 @@ public:
 	~CLine();
 
 public:
-	void		Render(HDC hDC);
+	virtual void		Render(HDC hDC);
 
 public:
 	const LINEINFO&		Get_Info() const { return m_tInfo; }
