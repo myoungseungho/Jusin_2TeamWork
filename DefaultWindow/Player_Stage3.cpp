@@ -2,7 +2,7 @@
 #include "Player_Stage3.h"
 #include "KeyMgr.h"
 #include "LineMgr.h"
-CPlayer_Stage3::CPlayer_Stage3() : m_bHasTargetLine(false), m_fLineY(0.f) , m_fGravity(9.8f)
+CPlayer_Stage3::CPlayer_Stage3() : m_bHasTargetLine(false), m_fLineY(0.f), m_fGravity(9.8f)
 {
 }
 
@@ -31,6 +31,7 @@ void CPlayer_Stage3::Key_Input()
 		if (CKeyMgr::Get_Instance()->Key_Up(VK_LSHIFT))
 		{
 			m_bDownJump = true;
+			m_bHasTargetLine = false;
 			m_tInfo.fY += m_tInfo.fCY * 0.5f;
 		}
 	}
@@ -103,16 +104,23 @@ void CPlayer_Stage3::JumpWithoutLineCollision()
 
 void CPlayer_Stage3::DownJump()
 {
+	if (!m_bHasTargetLine)
+	{
+		m_fLineY = m_tInfo.fY; // 라인의 Y값
+		CLineMgr::Get_Instance()->Collision_Line_DownJump_Stage3(m_tInfo.fX, &m_fLineY);
+		m_bHasTargetLine = true;
+	}
+
 	// 아래로 점프 로직
 	m_tInfo.fY -= -9.8f * m_fTime * m_fTime * 0.5f;
 	m_fTime += 0.2f;
-	float fY = m_tInfo.fY; // 재정의 필요 없으므로 제거
-	if ((fY < m_tRect.bottom))
+	if ((m_fLineY < m_tRect.bottom))
 	{
 		m_fTime = 0.f;
 		float fLineOffset = -m_tInfo.fCX * 0.5f;
-		m_tInfo.fY = fY + fLineOffset;
+		m_tInfo.fY = m_fLineY + fLineOffset;
 		m_bDownJump = false;
+		m_bHasTargetLine = false;
 	}
 }
 
