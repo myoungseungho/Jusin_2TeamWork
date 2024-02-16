@@ -4,7 +4,7 @@
 #include "Line_Item.h"
 CLineMgr* CLineMgr::m_pInstance = NULL;
 
-CLineMgr::CLineMgr()
+CLineMgr::CLineMgr() : m_targetLine(nullptr)
 {
 }
 
@@ -45,6 +45,7 @@ bool CLineMgr::Collision_Line(float _fX, float* pY)
 	CLine* pTarget = nullptr;
 	float fComparison(10000.f);
 	float _fPlayerY = *pY;
+	vector<CLine*> vecCLine;
 
 	for (auto& iter : m_Linelist)
 	{
@@ -59,14 +60,20 @@ bool CLineMgr::Collision_Line(float _fX, float* pY)
 
 			// 해당 라인과 플레이어의 X값에 해당하는 라인의 Y값 구하기.
 			float LineY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
-			
-			//라인의 Y값들 중에 가장 작은 값을 타겟으로 설정
-			float fInterval = abs(LineY - _fPlayerY);
-			if (fComparison > fInterval)
+
+			//LineY가 더 플레이어보다 아래 있어야 한다.
+			if (_fPlayerY <= LineY)
 			{
-				fComparison = fInterval;
-				pTarget = iter;
+				//라인의 Y값들 중에 가장 작은 값을 타겟으로 설정
+				float fInterval = abs(LineY - _fPlayerY);
+				if (fComparison > fInterval)
+				{
+					fComparison = fInterval;
+					pTarget = iter;
+					vecCLine.push_back(iter);
+				}
 			}
+
 		}
 	}
 
@@ -80,6 +87,8 @@ bool CLineMgr::Collision_Line(float _fX, float* pY)
 
 	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
 
+	m_targetLine = pTarget;
+
 	return true;
 }
 
@@ -90,6 +99,7 @@ bool CLineMgr::Collision_Line_DownJump_Stage3(float _fX, float* pY)
 
 	CLine* pTarget = nullptr;
 	float _fPlayerY = *pY;
+	float fComparison(10000.f);
 
 	for (auto& iter : m_Linelist)
 	{
@@ -107,8 +117,13 @@ bool CLineMgr::Collision_Line_DownJump_Stage3(float _fX, float* pY)
 
 			if (LineY > _fPlayerY)
 			{
-				pTarget = iter;
-
+				//라인의 Y값들 중에 가장 작은 값을 타겟으로 설정
+				float fInterval = abs(LineY - _fPlayerY);
+				if (fComparison > fInterval)
+				{
+					fComparison = fInterval;
+					pTarget = iter;
+				}
 			}
 		}
 	}
@@ -225,7 +240,9 @@ void CLineMgr::Load_Stage3_Line()
 			break;
 
 		m_Linelist.push_back(new CLine(tInfo));
+		m_Linelist.back()->Initialize();
 		m_Line_Item_List.push_back(new CLine_Item(tInfo_Line_Item));
+		m_Line_Item_List.back()->Initialize();
 	}
 
 	CloseHandle(hFile);

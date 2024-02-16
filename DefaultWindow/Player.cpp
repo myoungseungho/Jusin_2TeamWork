@@ -22,10 +22,10 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize()
 {
-	m_tInfo = { 100.f, WINCY / 2.f, 100.f, 100.f };
-	m_fSpeed = 10.f;
+	m_tInfo = { 100.f, WINCY / 2.f, 25.f, 25.f };
+	m_fSpeed = 3.f;
 	m_fDistance = 100.f;
-	m_fPower = 30.f;
+	m_fPower = 20.f;
 	m_fTime = 0.f;
 	m_bJump = false;
 	m_bDownJump = false;

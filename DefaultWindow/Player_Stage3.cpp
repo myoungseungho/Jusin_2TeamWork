@@ -2,7 +2,7 @@
 #include "Player_Stage3.h"
 #include "KeyMgr.h"
 #include "LineMgr.h"
-CPlayer_Stage3::CPlayer_Stage3()
+CPlayer_Stage3::CPlayer_Stage3() : m_bHasTargetLine(false), m_fLineY(0.f) , m_fGravity(9.8f)
 {
 }
 
@@ -21,7 +21,10 @@ void CPlayer_Stage3::Key_Input()
 		m_tInfo.fX -= m_fSpeed;
 
 	if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
+	{
 		m_bJump = true;
+		m_bHasTargetLine = false;
+	}
 
 	if (CKeyMgr::Get_Instance()->Key_Up(VK_DOWN))
 	{
@@ -35,64 +38,81 @@ void CPlayer_Stage3::Key_Input()
 
 void CPlayer_Stage3::Jump()
 {
-	//라인 Y값 초기화
-	float	fY = m_tInfo.fY;
-	//플레이어와 라인이 부딪혔다면 라인의 직선의 방정식으로 얻은 fY값 변경
-	//fY의 값은 라인의 y값이고 변하지 않는 값임
-	//라인 타겟을 플레이어가 잡았을 때 True
-	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
-	//점프했다면
-	if (m_bJump)
+	if (!m_bDownJump && !m_bJump)
 	{
-		//플레이어 y값 갱신
-		m_tInfo.fY -= m_fPower * m_fTime - 9.8f * m_fTime * m_fTime * 0.5f;
-		//시간값 증가
-		m_fTime += 0.2f;
-		if ((m_fPower * m_fTime) <= (9.8f * m_fTime * m_fTime * 0.5f))
-		{
-			if (bLineCol && (fY < m_tRect.bottom))
-			{
-				float fLineOffset = -50.f;
-				m_bJump = false;
-				m_fTime = 0.f;
-				m_tInfo.fY = fY + fLineOffset;
-			}
-		}
+		JumpWithoutLineCollision();
 	}
-	//bLineCol의 상태라면
-	else if (bLineCol && !m_bDownJump)
+	else if (m_bJump)
 	{
-		//플레이어 y값 갱신
-		m_tInfo.fY -= -9.8f * m_fTime * m_fTime * 0.5f;
-		//시간값 증가
-		m_fTime += 0.2f;
-		if ((fY < m_tRect.bottom))
-		{
-			m_fTime = 0.f;
-			float fLineOffset = -m_tInfo.fCX * 0.5f;
-			m_tInfo.fY = fY + fLineOffset;
-		}
+		NormalJump();
 	}
 	else if (m_bDownJump)
 	{
-		//라인 Y값 초기화
-		float	fY = m_tInfo.fY;
-		//플레이어와 라인이 부딪혔다면 라인의 직선의 방정식으로 얻은 fY값 변경
-		//fY의 값은 라인의 y값이고 변하지 않는 값임
-		//라인 타겟을 플레이어가 잡았을 때 True
-		bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line_DownJump_Stage3(m_tInfo.fX, &fY);
+		DownJump();
+	}
+}
 
-		//플레이어 y값 갱신
-		m_tInfo.fY -= -9.8f * m_fTime * m_fTime * 0.5f;
-		//시간값 증가
-		m_fTime += 0.2f;
-		if ((fY < m_tRect.bottom))
-	 	{
-			m_fTime = 0.f;
-			float fLineOffset = -m_tInfo.fCX * 0.5f;
-			m_tInfo.fY = fY + fLineOffset;
-			m_bDownJump = false;
+void CPlayer_Stage3::NormalJump()
+{
+	// 일반 점프 로직
+	m_tInfo.fY -= m_fPower * m_fTime - m_fGravity * m_fTime * m_fTime * 0.5f;
+	m_fTime += 0.2f;
+
+	if ((m_fPower * m_fTime) <= (m_fGravity * m_fTime * m_fTime * 0.5f))
+	{
+		if (!m_bHasTargetLine)
+		{
+			m_fLineY = m_tInfo.fY; // 라인의 Y값
+			CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &m_fLineY);
+			m_bHasTargetLine = true;
 		}
+
+		if (m_bHasTargetLine && (m_fLineY < m_tRect.bottom))
+		{
+			float fLineOffset = -m_tInfo.fCX * 0.5f;
+			m_bHasTargetLine = false;
+			m_bJump = false;
+			m_fTime = 0.f;
+			m_tInfo.fY = m_fLineY + fLineOffset;
+		}
+	}
+}
+
+void CPlayer_Stage3::JumpWithoutLineCollision()
+{
+	m_fLineY = m_tInfo.fY; // 라인의 Y값
+	CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &m_fLineY);
+
+	float threshold = 3.f;
+	bool bIsGround = threshold > abs(m_fLineY - m_tRect.bottom);
+
+	if (!bIsGround)
+	{
+		//떨어질때 천천히 떨어져야 함. 안그러면 검사 못하고 지나칠때가 있음
+		m_tInfo.fY += 1.f * m_fTime * m_fTime * 0.5f;
+		m_fTime += 0.2f;
+	}
+
+	if ((m_fLineY < m_tRect.bottom + threshold))
+	{
+		float fLineOffset = -m_tInfo.fCX * 0.5f;
+		m_fTime = 0.f;
+		m_tInfo.fY = m_fLineY + fLineOffset;
+	}
+}
+
+void CPlayer_Stage3::DownJump()
+{
+	// 아래로 점프 로직
+	m_tInfo.fY -= -9.8f * m_fTime * m_fTime * 0.5f;
+	m_fTime += 0.2f;
+	float fY = m_tInfo.fY; // 재정의 필요 없으므로 제거
+	if ((fY < m_tRect.bottom))
+	{
+		m_fTime = 0.f;
+		float fLineOffset = -m_tInfo.fCX * 0.5f;
+		m_tInfo.fY = fY + fLineOffset;
+		m_bDownJump = false;
 	}
 }
 

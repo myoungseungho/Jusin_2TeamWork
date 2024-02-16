@@ -57,6 +57,12 @@ enum LINEEDITMODE
 	LINE_ITEM_MODE
 };
 
+enum LINETYPE
+{
+	NORMAL_LINE,
+	WALL_LINE,
+};
+
 typedef struct tagInfo
 {
 	float		fX;			// ÁßÁ¡ X

@@ -22,6 +22,7 @@ public:
 
 	list<CLine*>* GetLineList() { return &m_Linelist; }
 	list<CLine*>* GetLine_Item_List() { return &m_Line_Item_List; }
+	CLine* GetTargetLine() { return m_targetLine; }
 
 public:
 	static		CLineMgr* Get_Instance()
@@ -49,6 +50,6 @@ private:
 
 	//3스테이지 전용
 	list<CLine*>			m_Line_Item_List;
-
+	CLine*					m_targetLine;
 };
 

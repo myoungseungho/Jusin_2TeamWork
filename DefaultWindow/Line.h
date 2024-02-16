@@ -11,6 +11,7 @@ public:
 	virtual ~CLine();
 
 public:
+	virtual void		Initialize();
 	virtual void		Render(HDC hDC);
 
 public:
@@ -19,5 +20,6 @@ public:
 
 protected:
 	LINEINFO		m_tInfo;
+	LINETYPE		m_Type;
 };
 
