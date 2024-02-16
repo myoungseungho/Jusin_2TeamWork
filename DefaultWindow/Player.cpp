@@ -28,6 +28,7 @@ void CPlayer::Initialize()
 	m_fPower = 30.f;
 	m_fTime = 0.f;
 	m_bJump = false;
+	m_bDownJump = false;
 }
 
 int CPlayer::Update()

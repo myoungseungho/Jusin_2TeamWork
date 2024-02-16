@@ -22,6 +22,15 @@ void CPlayer_Stage3::Key_Input()
 
 	if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
 		m_bJump = true;
+
+	if (CKeyMgr::Get_Instance()->Key_Up(VK_DOWN))
+	{
+		if (CKeyMgr::Get_Instance()->Key_Up(VK_LSHIFT))
+		{
+			m_bDownJump = true;
+			m_tInfo.fY += m_tInfo.fCY * 0.5f;
+		}
+	}
 }
 
 void CPlayer_Stage3::Jump()
@@ -32,7 +41,6 @@ void CPlayer_Stage3::Jump()
 	//fY의 값은 라인의 y값이고 변하지 않는 값임
 	//라인 타겟을 플레이어가 잡았을 때 True
 	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
-
 	//점프했다면
 	if (m_bJump)
 	{
@@ -52,7 +60,7 @@ void CPlayer_Stage3::Jump()
 		}
 	}
 	//bLineCol의 상태라면
-	else if (bLineCol)
+	else if (bLineCol && !m_bDownJump)
 	{
 		//플레이어 y값 갱신
 		m_tInfo.fY -= -9.8f * m_fTime * m_fTime * 0.5f;
@@ -63,6 +71,27 @@ void CPlayer_Stage3::Jump()
 			m_fTime = 0.f;
 			float fLineOffset = -m_tInfo.fCX * 0.5f;
 			m_tInfo.fY = fY + fLineOffset;
+		}
+	}
+	else if (m_bDownJump)
+	{
+		//라인 Y값 초기화
+		float	fY = m_tInfo.fY;
+		//플레이어와 라인이 부딪혔다면 라인의 직선의 방정식으로 얻은 fY값 변경
+		//fY의 값은 라인의 y값이고 변하지 않는 값임
+		//라인 타겟을 플레이어가 잡았을 때 True
+		bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line_DownJump_Stage3(m_tInfo.fX, &fY);
+
+		//플레이어 y값 갱신
+		m_tInfo.fY -= -9.8f * m_fTime * m_fTime * 0.5f;
+		//시간값 증가
+		m_fTime += 0.2f;
+		if ((fY < m_tRect.bottom))
+	 	{
+			m_fTime = 0.f;
+			float fLineOffset = -m_tInfo.fCX * 0.5f;
+			m_tInfo.fY = fY + fLineOffset;
+			m_bDownJump = false;
 		}
 	}
 }
@@ -76,6 +105,7 @@ int CPlayer_Stage3::Update()
 {
 	CPlayer::Update();
 	Key_Input();
+
 	return OBJ_NOEVENT;
 }
 

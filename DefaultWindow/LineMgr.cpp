@@ -83,6 +83,49 @@ bool CLineMgr::Collision_Line(float _fX, float* pY)
 	return true;
 }
 
+bool CLineMgr::Collision_Line_DownJump_Stage3(float _fX, float* pY)
+{
+	if (m_Linelist.empty())
+		return false;
+
+	CLine* pTarget = nullptr;
+	float _fPlayerY = *pY;
+
+	for (auto& iter : m_Linelist)
+	{
+		//라인 중 플레이어 x와 겹치는 라인 체크
+		if (iter->Get_Info().tLeft.fX <= _fX &&
+			iter->Get_Info().tRight.fX >= _fX)
+		{
+			float x1 = iter->Get_Info().tLeft.fX;
+			float x2 = iter->Get_Info().tRight.fX;
+			float y1 = iter->Get_Info().tLeft.fY;
+			float y2 = iter->Get_Info().tRight.fY;
+
+			// 해당 라인과 플레이어의 X값에 해당하는 라인의 Y값 구하기.
+			float LineY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+			if (LineY > _fPlayerY)
+			{
+				pTarget = iter;
+
+			}
+		}
+	}
+
+	if (!pTarget)
+		return false;
+
+	float x1 = pTarget->Get_Info().tLeft.fX;
+	float x2 = pTarget->Get_Info().tRight.fX;
+	float y1 = pTarget->Get_Info().tLeft.fY;
+	float y2 = pTarget->Get_Info().tRight.fY;
+
+	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+	return true;
+}
+
 void CLineMgr::Load_Line()
 {
 	STAGE currentStage = CGameMgr::Get_Instance()->GetCurrentStage();

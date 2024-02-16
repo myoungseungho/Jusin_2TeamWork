@@ -14,6 +14,8 @@ public:
 	void		Release();
 
 	bool		Collision_Line(float _fX, float* pY);
+	bool		Collision_Line_DownJump_Stage3(float _fX, float* pY);
+
 	void		Load_Line();
 	void		Load_Stage1_And_Stage2_Line(STAGE);
 	void		Load_Stage3_Line();

@@ -7,13 +7,13 @@ public:
 	CPlayer_Stage3();
 	virtual ~CPlayer_Stage3();
 public:
-	virtual void		Key_Input();
-	virtual void		Jump();
-public:
 	virtual void Initialize() override;
 	virtual int	 Update() override;
 	virtual void Late_Update() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
+public:
+	virtual void		Key_Input();
+	virtual void		Jump();
 };
 

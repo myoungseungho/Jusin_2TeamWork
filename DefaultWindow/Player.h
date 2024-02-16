@@ -34,6 +34,7 @@ protected:
 	POINT			m_tPosin;
 
 	bool			m_bJump;
+	bool			m_bDownJump;
 	float			m_fPower;
 	float			m_fTime;
 };
