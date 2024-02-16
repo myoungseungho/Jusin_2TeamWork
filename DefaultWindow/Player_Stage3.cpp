@@ -54,8 +54,16 @@ void CPlayer_Stage3::Jump()
 	//bLineCol의 상태라면
 	else if (bLineCol)
 	{
-		float fLineOffset = -m_tInfo.fCX * 0.5f;
-		m_tInfo.fY = fY + fLineOffset;
+		//플레이어 y값 갱신
+		m_tInfo.fY -= -9.8f * m_fTime * m_fTime * 0.5f;
+		//시간값 증가
+		m_fTime += 0.2f;
+		if ((fY < m_tRect.bottom))
+		{
+			m_fTime = 0.f;
+			float fLineOffset = -m_tInfo.fCX * 0.5f;
+			m_tInfo.fY = fY + fLineOffset;
+		}
 	}
 }
 
