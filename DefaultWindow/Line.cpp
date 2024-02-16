@@ -31,7 +31,7 @@ void CLine::Initialize()
 	double dDegree = (180 / PI) * dRadian;
 
 	// 우상향하는 직선의 경우
-	if (y2 > y1) {
+	if (y2 < y1) {
 		if (fabs(dDegree) > 60) { // 각도의 절대값이 60도를 초과하면 WALL_LINE
 			m_Type = WALL_LINE;
 		}
