@@ -10,8 +10,11 @@ void CItem_Stage3::Initialize()
 
 int CItem_Stage3::Update()
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	__super::Update_Rect();
-	return 0;
+	return OBJ_NOEVENT;
 }
 
 void CItem_Stage3::Late_Update()

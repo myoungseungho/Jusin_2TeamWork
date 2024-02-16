@@ -61,8 +61,7 @@ void CObjMgr::Late_Update()
 		}
 	}
 
-	CCollisionMgr::Collision_Sphere(m_ObjList[iCurrentStage][OBJ_BULLET], m_ObjList[iCurrentStage][OBJ_MONSTER]);
-	CCollisionMgr::Collision_RectEx(m_ObjList[iCurrentStage][OBJ_MONSTER], m_ObjList[iCurrentStage][OBJ_PLAYER]);
+	CCollisionMgr::Collision_Sphere_Player_With_Item(m_ObjList[iCurrentStage][OBJ_PLAYER], m_ObjList[iCurrentStage][OBJ_ITEM]);
 }
 
 void CObjMgr::Render(HDC hDC)

@@ -56,6 +56,20 @@ void CCollisionMgr::Collision_Sphere(list<CObj*> _Dst, list<CObj*> _Src)
 	}
 }
 
+void CCollisionMgr::Collision_Sphere_Player_With_Item(list<CObj*> _Player, list<CObj*> _Item)
+{
+	for (auto& Player : _Player)
+	{
+		for (auto& Item : _Item)
+		{
+			if (Check_Sphere(Player, Item))
+			{
+				Item->Set_Dead();
+			}
+		}
+	}
+}
+
 bool CCollisionMgr::Check_Rect(float * pX, float * pY, CObj * pDst, CObj * pSrc)
 {
 	float		fDistance_W = abs(pDst->Get_Info().fX - pSrc->Get_Info().fX);
