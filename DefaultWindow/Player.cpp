@@ -22,10 +22,10 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize()
 {
-	m_tInfo  = {100.f, WINCY / 2.f, 100.f, 100.f };
+	m_tInfo = { 100.f, WINCY / 2.f, 100.f, 100.f };
 	m_fSpeed = 10.f;
 	m_fDistance = 100.f;
-	m_fPower = 20.f;
+	m_fPower = 30.f;
 	m_fTime = 0.f;
 	m_bJump = false;
 }
@@ -51,11 +51,11 @@ void CPlayer::Render(HDC hDC)
 {
 	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
-	Rectangle(hDC, 
-			m_tRect.left + iScrollX,
-			m_tRect.top, 
-			m_tRect.right + iScrollX,
-			m_tRect.bottom);
+	Rectangle(hDC,
+		m_tRect.left + iScrollX,
+		m_tRect.top,
+		m_tRect.right + iScrollX,
+		m_tRect.bottom);
 
 	// 포신
 //	MoveToEx(hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
@@ -68,11 +68,11 @@ void CPlayer::Release()
 }
 
 void CPlayer::Key_Input()
-{	
+{
 	float fY(0.f);
 
 	if (GetAsyncKeyState(VK_RIGHT))
-	{ 
+	{
 		m_tInfo.fX += m_fSpeed;
 
 		/*if (CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY))
@@ -93,10 +93,10 @@ void CPlayer::Key_Input()
 	}
 }
 
+//점프가 너무 광범위한 함수로 구성되어있음.
 void CPlayer::Jump()
 {
-	float	fY(0.f);
-
+	float	fY = Get_Info().fY;
 	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
 
 	if (m_bJump)
@@ -132,9 +132,9 @@ void CPlayer::OffSet()
 		CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
 }
 
-CObj * CPlayer::Create_Shield()
+CObj* CPlayer::Create_Shield()
 {
-	CObj*	pObj = CAbstractFactory<CShield>::Create();
+	CObj* pObj = CAbstractFactory<CShield>::Create();
 	pObj->Set_Target(this);
 
 	return pObj;
@@ -143,7 +143,7 @@ CObj * CPlayer::Create_Shield()
 template<typename T>
 CObj* CPlayer::Create_Bullet()
 {
-	CObj*	pObj = CAbstractFactory<T>::Create((float)m_tPosin.x, (float)m_tPosin.y, m_fAngle);
-	
+	CObj* pObj = CAbstractFactory<T>::Create((float)m_tPosin.x, (float)m_tPosin.y, m_fAngle);
+
 	return pObj;
 }

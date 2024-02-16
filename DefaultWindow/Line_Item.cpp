@@ -18,8 +18,8 @@ CLine_Item::~CLine_Item()
 
 void CLine_Item::Render(HDC hDC)
 {
-	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	/*int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 
 	MoveToEx(hDC, (int)m_tInfo.tLeft.fX + iScrollX, (int)m_tInfo.tLeft.fY, NULL);
-	LineTo(hDC, (int)m_tInfo.tRight.fX + iScrollX, (int)m_tInfo.tRight.fY);
+	LineTo(hDC, (int)m_tInfo.tRight.fX + iScrollX, (int)m_tInfo.tRight.fY);*/
 }
