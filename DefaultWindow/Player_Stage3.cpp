@@ -37,8 +37,9 @@ void CPlayer_Stage3::Key_Input()
 	}
 }
 
-void CPlayer_Stage3::Jump()
+void CPlayer_Stage3::HandleMove()
 {
+	//점프 없는 기본
 	if (!m_bDownJump && !m_bJump)
 	{
 		JumpWithoutLineCollision();
@@ -140,7 +141,7 @@ int CPlayer_Stage3::Update()
 void CPlayer_Stage3::Late_Update()
 {
 	CPlayer::Late_Update();
-	Jump();
+	HandleMove();
 }
 
 void CPlayer_Stage3::Render(HDC hDC)

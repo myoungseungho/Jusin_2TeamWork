@@ -16,7 +16,7 @@ public:
 	virtual void Release() override;
 public:
 	virtual void		Key_Input();
-	virtual void		Jump();
+	virtual void		HandleMove();
 public:
 	void NormalJump();
 	void JumpWithoutLineCollision();

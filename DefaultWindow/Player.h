@@ -19,7 +19,7 @@ public:
 
 protected:
 	virtual void		Key_Input();
-	virtual void		Jump();
+	virtual void		HandleMove();
 	void		OffSet();
 
 

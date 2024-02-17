@@ -95,7 +95,7 @@ void CPlayer::Key_Input()
 }
 
 //점프가 너무 광범위한 함수로 구성되어있음.
-void CPlayer::Jump()
+void CPlayer::HandleMove()
 {
 	float	fY = Get_Info().fY;
 	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
