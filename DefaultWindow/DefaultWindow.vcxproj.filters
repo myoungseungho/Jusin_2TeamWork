@@ -75,6 +75,33 @@
     </Filter>
     <Filter Include="01. Obj\05. Item">
       <UniqueIdentifier>{67603ac4-65ff-471e-b331-15a1ba298aa6}</UniqueIdentifier>
+    <Filter Include="01. Obj\05.Item">
+      <UniqueIdentifier>{9661c11a-c43d-4e17-8b6d-e9087d402b83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\06.Spawn">
+      <UniqueIdentifier>{e99a1377-a865-4ca6-9c79-345f9c13b870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Player\Player_Stage1">
+      <UniqueIdentifier>{7840239b-e693-45db-b375-3b9ba659e1ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02. Monster\Monster_Stage1B">
+      <UniqueIdentifier>{db0b5c32-4537-4e09-9022-536dc3f39417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02. Monster\Monster_Stage1A">
+      <UniqueIdentifier>{3a1c10e1-8c3c-48e8-bd14-69003de91789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01. Bullet\02.ChargeBullet">
+      <UniqueIdentifier>{9fc21097-5737-4580-99b5-dfc1b29bfcc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02. Monster\Monster_Stage1Boss">
+      <UniqueIdentifier>{cec54ca9-1520-4538-9e88-064b868984d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01. Bullet\03.ShotgunBullet">
+      <UniqueIdentifier>{e6bcdf2b-5e0b-4acd-bbad-369023bc81cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Design\06.BmpMgr">
+      <UniqueIdentifier>{c598e75c-4ccf-4b98-a6cd-b70bfbb73f04}</UniqueIdentifier>
+>>>>>>> Merge용백업
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +200,33 @@
     </ClInclude>
     <ClInclude Include="Item_Stage3.h">
       <Filter>01. Obj\05. Item</Filter>
+    <ClInclude Include="Player_Stage2.h">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>01. Obj\05.Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawn.h">
+      <Filter>01. Obj\06.Spawn</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Stage1.h">
+      <Filter>01. Obj\00. Player\Player_Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Stage1.h">
+      <Filter>01. Obj\02. Monster\Monster_Stage1A</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Stage1B.h">
+      <Filter>01. Obj\02. Monster\Monster_Stage1B</Filter>
+    </ClInclude>
+    <ClInclude Include="ChargeBullet.h">
+      <Filter>01. Obj\01. Bullet\02.ChargeBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Stage1Boss.h">
+      <Filter>01. Obj\02. Monster\Monster_Stage1Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotgunBullet.h">
+      <Filter>01. Obj\01. Bullet\03.ShotgunBullet</Filter>
+>>>>>>> Merge용백업
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +313,29 @@
     </ClCompile>
     <ClCompile Include="Item_Stage3.cpp">
       <Filter>01. Obj\05. Item</Filter>
+    <ClCompile Include="Item.cpp">
+      <Filter>01. Obj\05.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawn.cpp">
+      <Filter>01. Obj\06.Spawn</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Stage1.cpp">
+      <Filter>01. Obj\00. Player\Player_Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Stage1.cpp">
+      <Filter>01. Obj\02. Monster\Monster_Stage1A</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Stage1B.cpp">
+      <Filter>01. Obj\02. Monster\Monster_Stage1B</Filter>
+    </ClCompile>
+    <ClCompile Include="ChargeBullet.cpp">
+      <Filter>01. Obj\01. Bullet\02.ChargeBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Stage1Boss.cpp">
+      <Filter>01. Obj\02. Monster\Monster_Stage1Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotgunBullet.cpp">
+      <Filter>01. Obj\01. Bullet\03.ShotgunBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

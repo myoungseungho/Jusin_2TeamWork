@@ -6,6 +6,7 @@ CLineMgr* CLineMgr::m_pInstance = NULL;
 
 CLineMgr::CLineMgr() : m_targetLine(nullptr)
 {
+
 }
 
 CLineMgr::~CLineMgr()
@@ -36,8 +37,12 @@ void CLineMgr::Release()
 	m_Line_Item_List.clear();
 }
 
+<<<<<<< HEAD
 
 bool CLineMgr::Collision_Line(float _fX, float* pY)
+=======
+bool CLineMgr::Collision_Line(float _fX, float _fY, float * pY)
+>>>>>>> Mergeìš©ë°±ì—…
 {
 	if (m_Linelist.empty())
 		return false;
@@ -49,6 +54,7 @@ bool CLineMgr::Collision_Line(float _fX, float* pY)
 
 	for (auto& iter : m_Linelist)
 	{
+<<<<<<< HEAD
 		//¶óÀÎ Áß ÇÃ·¹ÀÌ¾î x¿Í °ãÄ¡´Â ¶óÀÎ Ã¼Å©
 		if (iter->Get_Info().tLeft.fX <= _fX &&
 			iter->Get_Info().tRight.fX >= _fX)
@@ -74,6 +80,13 @@ bool CLineMgr::Collision_Line(float _fX, float* pY)
 				}
 			}
 
+=======
+		
+		if (iter->Get_Info().tLeft.fX <= _fX && iter->Get_Info().tRight.fX >= _fX && iter->Get_Info().tLeft.fY >= _fY)
+		{
+			
+			pTarget = iter;
+>>>>>>> Mergeìš©ë°±ì—…
 		}
 	}
 

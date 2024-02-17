@@ -13,9 +13,13 @@ public:
 	void		Render(HDC hDC);
 	void		Release();
 
+<<<<<<< HEAD
 	bool		Collision_Line(float _fX, float* pY);
 	bool		Collision_Line_DownJump_Stage3(float _fX, float* pY);
 
+=======
+	bool		Collision_Line(float _fX, float _fY, float* pY);
+>>>>>>> Mergeìš©ë°±ì—…
 	void		Load_Line();
 	void		Load_Stage1_And_Stage2_Line(STAGE);
 	void		Load_Stage3_Line();
@@ -46,10 +50,13 @@ public:
 private:
 	static CLineMgr* m_pInstance;
 	list<CLine*>			m_Linelist;
+<<<<<<< HEAD
 
 
 	//3½ºÅ×ÀÌÁö Àü¿ë
 	list<CLine*>			m_Line_Item_List;
 	CLine*					m_targetLine;
+=======
+>>>>>>> Mergeìš©ë°±ì—…
 };
 

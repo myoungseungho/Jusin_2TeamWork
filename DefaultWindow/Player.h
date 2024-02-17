@@ -1,5 +1,7 @@
 #pragma once
 #include "Obj.h"
+#include "Player_Stage1.h"
+
 class CPlayer : public CObj
 {
 public:
@@ -7,8 +9,8 @@ public:
 	virtual ~CPlayer();
 
 public:
-	void		Set_Bullet(list<CObj*>* pBullet) { m_pBullet = pBullet; }
-	void		Set_Shield(list<CObj*>* pShield) { m_pShield = pShield; }
+	//void		Set_Bullet(list<CObj*>* pBullet) { m_pBullet = pBullet; }
+	//void		Set_Shield(list<CObj*>* pShield) { m_pShield = pShield; }
 
 public:
 	virtual void Initialize() override;
@@ -29,12 +31,13 @@ protected:
 	CObj* Create_Bullet();
 
 protected:
-	list<CObj*>* m_pBullet;
-	list<CObj*>* m_pShield;
-	POINT			m_tPosin;
 
 	bool			m_bJump;
 	bool			m_bDownJump;
 	float			m_fPower;
 	float			m_fTime;
+
+
+	CObj* m_pPlayer_Stage1;
+
 };

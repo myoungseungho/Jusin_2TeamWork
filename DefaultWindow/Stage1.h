@@ -1,5 +1,6 @@
 #pragma once
 #include "Stage.h"
+#include "Obj.h"
 class CStage1 : public CStage
 {
 public:
@@ -12,5 +13,9 @@ public:
 	void Late_Update() override;
 	void Render() override;
 	void Release() override;
+
+private:
+	list<CObj*>		m_ObjList[OBJ_END];
+
 };
 

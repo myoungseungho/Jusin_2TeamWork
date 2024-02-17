@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="ChargeBullet.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="DefaultWindow.h" />
     <ClInclude Include="GameMgr.h" />
@@ -162,6 +163,9 @@
     <ClInclude Include="Line_Item.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="Monster_Stage1.h" />
+    <ClInclude Include="Monster_Stage1B.h" />
+    <ClInclude Include="Monster_Stage1Boss.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
@@ -173,6 +177,8 @@
     <ClInclude Include="ScrewBullet.h" />
     <ClInclude Include="ScrollMgr.h" />
     <ClInclude Include="Shield.h" />
+    <ClInclude Include="ShotgunBullet.h" />
+    <ClInclude Include="Spawn.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="Stage2.h" />
@@ -182,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="ChargeBullet.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="DefaultWindow.cpp" />
     <ClCompile Include="GameMgr.cpp" />
@@ -194,6 +201,9 @@
     <ClCompile Include="Line_Item.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Monster_Stage1.cpp" />
+    <ClCompile Include="Monster_Stage1B.cpp" />
+    <ClCompile Include="Monster_Stage1Boss.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
@@ -204,6 +214,8 @@
     <ClCompile Include="ScrewBullet.cpp" />
     <ClCompile Include="ScrollMgr.cpp" />
     <ClCompile Include="Shield.cpp" />
+    <ClCompile Include="ShotgunBullet.cpp" />
+    <ClCompile Include="Spawn.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="Stage2.cpp" />

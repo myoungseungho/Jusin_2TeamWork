@@ -11,6 +11,7 @@
 #include "Stage2.h"
 #include "Stage3.h"
 #include "GameMgr.h"
+#include "Spawn.h" //Ãß°¡
 
 CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr)
 {
@@ -36,23 +37,23 @@ void CMainGame::Initialize()
 	if (m_pStage3 == nullptr)
 		m_pStage3 = new CStage3;
 
-	m_pStage3->Initialize();
+	m_pStage1->Initialize();
 }
 
 void CMainGame::Update()
 {
-	m_pStage3->Update();
-	CObjMgr::Get_Instance()->Update();
+	m_pStage1->Update();
 }
 
 void CMainGame::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-	m_pStage3->Late_Update();
+	m_pStage1->Late_Update();
 }
 
 void CMainGame::Render()
 {
+	m_pStage1->Render();
 	++m_iFPS;
 
 	if (m_dwTime + 1000 < GetTickCount())
@@ -66,7 +67,7 @@ void CMainGame::Render()
 
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 
-	m_pStage3->Render();
+	m_pStage1->Render();
 
 	CLineMgr::Get_Instance()->Render(m_hDC);
 	CObjMgr::Get_Instance()->Render(m_hDC);
@@ -74,11 +75,14 @@ void CMainGame::Render()
 
 void CMainGame::Release()
 {
+	m_pStage1->Release();
+
 	CScrollMgr::Get_Instance()->Destroy_Instance();
 	CKeyMgr::Get_Instance()->Destroy_Instance();
 	CLineMgr::Get_Instance()->Destroy_Instance();
 	CObjMgr::Get_Instance()->Destroy_Instance();
 	CGameMgr::Get_Instance()->Destroy_Instance();
+
 	Safe_Delete(m_pStage1);
 	Safe_Delete(m_pStage2);
 	Safe_Delete(m_pStage3);

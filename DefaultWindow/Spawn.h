@@ -1,19 +1,13 @@
 #pragma once
+
 #include "Define.h"
 #include "Obj.h"
 
-class CItem :public CObj
+class CSpawn :public CObj
 {
 public:
-	CItem();
-	virtual ~CItem();
-
-private:
-	void Land();
-
-public:
-	void HealItem();
-	void BulletItem();
+	CSpawn();
+	virtual ~CSpawn();
 
 public:
 	virtual void		Initialize();
@@ -21,9 +15,9 @@ public:
 	virtual void		Late_Update();
 	virtual void		Render(HDC hDC);
 	virtual void		Release();
-
+	
 private:
-	float fY;
-	bool bLineCol;
+	float m_fCreateBossTimer;
+	bool m_bCreateBoss;
 };
 

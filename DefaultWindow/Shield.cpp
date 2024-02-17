@@ -26,8 +26,8 @@ int CShield::Update()
 
 	m_fAngle += m_fSpeed;
 
-	m_tInfo.fX = m_pTarget->Get_Info().fX + m_fDistance * cos(m_fAngle * (PI / 180.f));
-	m_tInfo.fY = m_pTarget->Get_Info().fY - m_fDistance * sin(m_fAngle * (PI / 180.f));
+	m_tInfo.fX = m_pTarget->Get_Info().fX + m_fDistance * (float)cos(m_fAngle * (PI / 180.f));
+	m_tInfo.fY = m_pTarget->Get_Info().fY - m_fDistance * (float)sin(m_fAngle * (PI / 180.f));
 	
 	__super::Update_Rect();
 

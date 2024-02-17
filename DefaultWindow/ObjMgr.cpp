@@ -94,6 +94,7 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pObj)
 		return nullptr;
 
 	CObj* pTarget = nullptr;
+
 	float	fDistance(0.f);
 
 	for (auto& iter : m_ObjList[iCurrentStage][eID])
@@ -104,7 +105,7 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pObj)
 		float	fWidth = abs(pObj->Get_Info().fX - iter->Get_Info().fX);
 		float	fHeight = abs(pObj->Get_Info().fY - iter->Get_Info().fY);
 
-		float	fDiagonal = sqrt(fWidth * fWidth + fHeight * fHeight);
+		float	fDiagonal = (float)sqrt(fWidth * fWidth + fHeight * fHeight);
 
 		if ((!pTarget) || (fDistance > fDiagonal))
 		{

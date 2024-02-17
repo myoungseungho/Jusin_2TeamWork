@@ -13,5 +13,7 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
 
+private:
+	float m_fDeleteBullet;
 };
 

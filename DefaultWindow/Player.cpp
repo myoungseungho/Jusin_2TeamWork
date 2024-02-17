@@ -10,9 +10,11 @@
 #include "KeyMgr.h"
 #include "ScrollMgr.h"
 
+
 CPlayer::CPlayer()
-	: m_pBullet(nullptr), m_pShield(nullptr)
+//: m_pBullet(nullptr), m_pShield(nullptr)
 {
+	m_pPlayer_Stage1 = nullptr;
 }
 
 CPlayer::~CPlayer()
@@ -34,41 +36,31 @@ void CPlayer::Initialize()
 int CPlayer::Update()
 {
 	__super::Update_Rect();
-
 	return OBJ_NOEVENT;
 }
 
 void CPlayer::Late_Update()
 {
-	// degree to radian
-
-	//m_tPosin.x = LONG(m_tInfo.fX + m_fDistance * cos(m_fAngle * (PI / 180.f)));
-	//m_tPosin.y = LONG(m_tInfo.fY - m_fDistance * sin(m_fAngle * (PI / 180.f)));
-
 	OffSet();
 }
 
 void CPlayer::Render(HDC hDC)
 {
 	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-
 	Rectangle(hDC,
 		m_tRect.left + iScrollX,
 		m_tRect.top,
 		m_tRect.right + iScrollX,
 		m_tRect.bottom);
-
-	// Æ÷½Å
-//	MoveToEx(hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
-	//LineTo(hDC, (int)m_tPosin.x, (int)m_tPosin.y);
-
 }
 
 void CPlayer::Release()
 {
+	Safe_Delete<CObj*>(m_pPlayer_Stage1);
 }
 
-void CPlayer::Key_Input()
+
+	void CPlayer::Key_Input()
 {
 	float fY(0.f);
 
@@ -133,7 +125,8 @@ void CPlayer::OffSet()
 		CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
 }
 
-CObj* CPlayer::Create_Shield()
+
+CObj * CPlayer::Create_Shield()
 {
 	CObj* pObj = CAbstractFactory<CShield>::Create();
 	pObj->Set_Target(this);
