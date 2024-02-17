@@ -7,14 +7,13 @@
 #include "Monster_Stage1.h"
 #include "GameMgr.h"
 
-CMonster_Stage1Boss::CMonster_Stage1Boss()
+CMonster_Stage1Boss::CMonster_Stage1Boss() 
 {
 	m_fMoveTimer = 0.f;
 	m_fRandomBullet = 0.f;
 	m_fSkillTimerA = 0.f;
 	m_fSkillTimerB = 0.f;
 	m_fSkillTimerC = 0.f;
-
 }
 
 CMonster_Stage1Boss::~CMonster_Stage1Boss()
@@ -97,10 +96,6 @@ int CMonster_Stage1Boss::Update()
 	if (m_bDead)
 	{
 		BossPatternC();
-
-		//1. GetTickCount로 총알 제거때 까지 시간 벌기
-		//2. 모든 총알 제거
-
 		CGameMgr::Get_Instance()->SetStage(STAGE_2);
 		return OBJ_DEAD;
 	}

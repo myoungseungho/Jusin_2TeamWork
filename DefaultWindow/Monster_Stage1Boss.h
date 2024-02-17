@@ -29,6 +29,5 @@ private:
 	float m_fSkillTimerA;
 	float m_fSkillTimerB;
 	float m_fSkillTimerC;
-	//CObj* m_pBossTarget;
 };
 

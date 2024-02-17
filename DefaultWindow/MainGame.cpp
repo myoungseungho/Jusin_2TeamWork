@@ -29,7 +29,6 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 	CLineMgr::Get_Instance()->Initialize();
 
-
 	if (m_pStage1 == nullptr)
 		m_pStage1 = new CStage1;
 	if (m_pStage2 == nullptr)
