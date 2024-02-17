@@ -69,7 +69,8 @@ enum LINEEDITMODE
 enum LINETYPE
 {
 	NORMAL_LINE,
-	WALL_LINE,
+	WALL_LINE_RightUp,
+	WALL_LINE_RightDown,
 };
 
 typedef struct tagInfo

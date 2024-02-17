@@ -32,12 +32,19 @@ void CLine::Initialize()
 
 	// 우상향하는 직선의 경우
 	if (y2 < y1) {
-		if (fabs(dDegree) > 60) { // 각도의 절대값이 60도를 초과하면 WALL_LINE
-			m_Type = WALL_LINE;
+		if (dDegree >= -90 && dDegree < -60) { // 각도의 절대값이 60도를 초과하면 WALL_LINE
+			m_Type = WALL_LINE_RightUp;
 		}
 		else {
 			m_Type = NORMAL_LINE;
 		}
+	}
+	else if (y1 < y2)
+	{
+		if (dDegree >= 60 && dDegree <= 90)
+			m_Type = WALL_LINE_RightDown;
+		else
+			m_Type = NORMAL_LINE;
 	}
 	// 우하향하는 직선의 경우
 	else {
@@ -55,7 +62,7 @@ void CLine::Render(HDC hDC)
 	if (m_Type == NORMAL_LINE) {
 		hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255)); // 파랑색 펜
 	}
-	else if (m_Type == WALL_LINE) {
+	else if (m_Type == WALL_LINE_RightUp || m_Type == WALL_LINE_RightDown) {
 		hPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0)); // 빨강색 펜
 	}
 	else {

@@ -19,12 +19,18 @@ void CPlayer_Stage3::Key_Input()
 		CLine* targetLine = CLineMgr::Get_Instance()->GetTargetLine();
 		LINETYPE current_Line_Type = targetLine->Get_Type();
 
-		if (current_Line_Type == NORMAL_LINE)
+		if (current_Line_Type == NORMAL_LINE || current_Line_Type == WALL_LINE_RightDown)
 			m_tInfo.fX += m_fSpeed;
 	}
 
 	if (GetAsyncKeyState(VK_LEFT))
-		m_tInfo.fX -= m_fSpeed;
+	{
+		CLine* targetLine = CLineMgr::Get_Instance()->GetTargetLine();
+		LINETYPE current_Line_Type = targetLine->Get_Type();
+
+		if (current_Line_Type == NORMAL_LINE || current_Line_Type == WALL_LINE_RightUp)
+			m_tInfo.fX -= m_fSpeed;
+	}
 
 	if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
 	{
@@ -107,9 +113,19 @@ void CPlayer_Stage3::JumpWithoutLineCollision()
 
 		CLine* targetLine = CLineMgr::Get_Instance()->GetTargetLine();
 		LINETYPE current_Line_Type = targetLine->Get_Type();
-		float fLineOffset = -m_tInfo.fCX * 0.5f;
-
-		m_tInfo.fY = m_fLineY + fLineOffset;
+		if (current_Line_Type == NORMAL_LINE)
+		{
+			float fLineOffset = -m_tInfo.fCY * 0.5f;
+			m_tInfo.fY = m_fLineY + fLineOffset;
+		}
+		else if (current_Line_Type == WALL_LINE_RightUp)
+		{
+			m_tInfo.fX -= 0.5f;
+		}
+		else if (current_Line_Type == WALL_LINE_RightDown)
+		{
+			m_tInfo.fX += 0.5f;
+		}
 	}
 }
 
