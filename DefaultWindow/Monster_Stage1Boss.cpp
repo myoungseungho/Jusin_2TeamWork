@@ -5,6 +5,7 @@
 #include "AbstractFactory.h"
 #include "Bullet.h"
 #include "Monster_Stage1.h"
+#include "GameMgr.h"
 
 CMonster_Stage1Boss::CMonster_Stage1Boss()
 {
@@ -80,6 +81,7 @@ void CMonster_Stage1Boss::BossPatternC()
 		m_fAngle = (float)i * 7.f;
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTERBULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, -m_fAngle));
 	}
+
 }
 
 void CMonster_Stage1Boss::Initialize()
@@ -95,8 +97,14 @@ int CMonster_Stage1Boss::Update()
 	if (m_bDead)
 	{
 		BossPatternC();
+
+		//1. GetTickCount로 총알 제거때 까지 시간 벌기
+		//2. 모든 총알 제거
+
+		CGameMgr::Get_Instance()->SetStage(STAGE_2);
 		return OBJ_DEAD;
 	}
+
 	m_fMoveTimer++;
 	m_fSkillTimerA++;
 	m_fSkillTimerB++;
@@ -118,7 +126,6 @@ void CMonster_Stage1Boss::Render(HDC hDC)
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 
 	Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
-
 }
 
 void CMonster_Stage1Boss::Release()

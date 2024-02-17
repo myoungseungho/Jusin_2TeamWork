@@ -38,61 +38,70 @@ void CMainGame::Initialize()
 		m_pStage3 = new CStage3;
 
 	m_pStage1->Initialize();
-
 }
 
 void CMainGame::Update()
 {
-	STAGE currentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 	CObjMgr::Get_Instance()->Update();
+	STAGE currentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 
-	switch (m_CurrentStage)
+	while (true)
 	{
-	case STAGE_1:
-		m_pStage1->Update();
-
-		if (currentStage == STAGE_2)
+		switch (m_CurrentStage)
 		{
-			m_CurrentStage == STAGE_2;
-			CObjMgr::Get_Instance()->Release();
-			m_bIsStageInit = true;
-		}
-		break;
-	case STAGE_2:
-		if (m_bIsStageInit == true)
-		{
-			m_pStage2->Initialize();
-			m_bIsStageInit = false;
-		}
+		case STAGE_1:
+			m_pStage1->Update();
 
-		m_pStage2->Update();
+			if (currentStage == STAGE_2)
+			{
+				m_CurrentStage = STAGE_2;
+				CObjMgr::Get_Instance()->Release();
+				CLineMgr::Get_Instance()->Release();
+				m_bIsStageInit = true;
+				break;
+			}
+			return;
+		case STAGE_2:
+			if (m_bIsStageInit == true)
+			{
+				CLineMgr::Get_Instance()->Initialize();
+				m_pStage2->Initialize();
+				m_bIsStageInit = false;
+			}
 
-		if (currentStage == STAGE_3)
-		{
-			m_CurrentStage == STAGE_3;
-			CObjMgr::Get_Instance()->Release();
-			m_bIsStageInit = true;
-		}
-		break;
-	case STAGE_3:
-		if (m_bIsStageInit == true)
-		{
-			m_pStage3->Initialize();
-			m_bIsStageInit = false;
-		}
+			m_pStage2->Update();
 
-		m_pStage3->Update();
+			if (currentStage == STAGE_3)
+			{
+				m_CurrentStage = STAGE_3;
+				CObjMgr::Get_Instance()->Release();
+				m_bIsStageInit = true;
+				break;
+			}
+			return;
+		case STAGE_3:
+			if (m_bIsStageInit == true)
+			{
+				CLineMgr::Get_Instance()->Initialize();
+				m_pStage3->Initialize();
+				m_bIsStageInit = false;
+			}
 
-		if (currentStage == STAGE_END)
-		{
-			m_CurrentStage == STAGE_END;
-			CObjMgr::Get_Instance()->Release();
-			m_bIsStageInit = true;
+			m_pStage3->Update();
+
+			if (currentStage == STAGE_END)
+			{
+				m_CurrentStage = STAGE_END;
+				CObjMgr::Get_Instance()->Release();
+				m_bIsStageInit = true;
+				break;
+			}
+			return;
+		default:
+			break;
 		}
-		break;
-	default:
-		break;
 	}
+
 }
 
 void CMainGame::Late_Update()
