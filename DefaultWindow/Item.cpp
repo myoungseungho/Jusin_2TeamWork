@@ -32,7 +32,7 @@ void CItem::Land()
 
 void CItem::HealItem()
 {
-	dynamic_cast<CPlayer_Stage1*>(CObjMgr::Get_Instance()->Get_Player_Stage1())->SetHp(1);
+	dynamic_cast<CPlayer_Stage1*>(CObjMgr::Get_Instance()->Get_Player())->SetHp(1);
 }
 
 void CItem::BulletItem()

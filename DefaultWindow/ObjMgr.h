@@ -16,17 +16,16 @@ public:
 	void	Release();
 
 public:
-	CObj* Get_Player_Stage3()
-	{
-		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
-		return m_ObjList[iCurrentStage][OBJ_PLAYER].front();
-	}
 
+	//공용 사용
 	CObj* Get_Target(OBJID eID, CObj* pObj);
-	CObj* Get_Player_Stage1()
+
+#pragma region Stage1
+
+	//Stage1
+	CObj* Get_Player()
 	{
 		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
-
 		return m_ObjList[iCurrentStage][OBJ_PLAYER].front();
 	}
 	CObj* Get_Item_Stage1()
@@ -40,11 +39,12 @@ public:
 		return m_ObjList[iCurrentStage][OBJ_BULLET].front();
 	}
 
-	list<CObj*> GetObjList_Stage1(OBJID eID) 
+	list<CObj*> GetObjList(OBJID eID) 
 	{
 		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 		return m_ObjList[iCurrentStage][eID];
 	}
+#pragma endregion
 
 public:
 	static		CObjMgr* Get_Instance()

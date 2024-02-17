@@ -13,7 +13,7 @@
 #include "GameMgr.h"
 #include "Spawn.h"
 
-CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr)
+CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr), m_CurrentStage(STAGE_1), m_bIsStageInit(false)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }
@@ -27,8 +27,8 @@ CMainGame::~CMainGame()
 void CMainGame::Initialize()
 {
 	m_hDC = GetDC(g_hWnd);
-
 	CLineMgr::Get_Instance()->Initialize();
+
 
 	if (m_pStage1 == nullptr)
 		m_pStage1 = new CStage1;
@@ -38,22 +38,85 @@ void CMainGame::Initialize()
 		m_pStage3 = new CStage3;
 
 	m_pStage1->Initialize();
+
 }
 
 void CMainGame::Update()
 {
-	m_pStage1->Update();
+	STAGE currentStage = CGameMgr::Get_Instance()->GetCurrentStage();
+	CObjMgr::Get_Instance()->Update();
+
+	switch (m_CurrentStage)
+	{
+	case STAGE_1:
+		m_pStage1->Update();
+
+		if (currentStage == STAGE_2)
+		{
+			m_CurrentStage == STAGE_2;
+			CObjMgr::Get_Instance()->Release();
+			m_bIsStageInit = true;
+		}
+		break;
+	case STAGE_2:
+		if (m_bIsStageInit == true)
+		{
+			m_pStage2->Initialize();
+			m_bIsStageInit = false;
+		}
+
+		m_pStage2->Update();
+
+		if (currentStage == STAGE_3)
+		{
+			m_CurrentStage == STAGE_3;
+			CObjMgr::Get_Instance()->Release();
+			m_bIsStageInit = true;
+		}
+		break;
+	case STAGE_3:
+		if (m_bIsStageInit == true)
+		{
+			m_pStage3->Initialize();
+			m_bIsStageInit = false;
+		}
+
+		m_pStage3->Update();
+
+		if (currentStage == STAGE_END)
+		{
+			m_CurrentStage == STAGE_END;
+			CObjMgr::Get_Instance()->Release();
+			m_bIsStageInit = true;
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void CMainGame::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-	m_pStage1->Late_Update();
+
+	switch (m_CurrentStage)
+	{
+	case STAGE_1:
+		m_pStage1->Late_Update();
+		break;
+	case STAGE_2:
+		m_pStage2->Late_Update();
+		break;
+	case STAGE_3:
+		m_pStage3->Late_Update();
+		break;
+	default:
+		break;
+	}
 }
 
 void CMainGame::Render()
 {
-	m_pStage1->Render();
 	++m_iFPS;
 
 	if (m_dwTime + 1000 < GetTickCount())
@@ -67,7 +130,20 @@ void CMainGame::Render()
 
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 
-	m_pStage1->Render();
+	switch (m_CurrentStage)
+	{
+	case STAGE_1:
+		m_pStage1->Render();
+		break;
+	case STAGE_2:
+		m_pStage2->Render();
+		break;
+	case STAGE_3:
+		m_pStage3->Render();
+		break;
+	default:
+		break;
+	}
 
 	CLineMgr::Get_Instance()->Render(m_hDC);
 	CObjMgr::Get_Instance()->Render(m_hDC);
@@ -76,6 +152,8 @@ void CMainGame::Render()
 void CMainGame::Release()
 {
 	m_pStage1->Release();
+	m_pStage2->Release();
+	m_pStage3->Release();
 
 	CScrollMgr::Get_Instance()->Destroy_Instance();
 	CKeyMgr::Get_Instance()->Destroy_Instance();

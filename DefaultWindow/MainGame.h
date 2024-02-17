@@ -27,5 +27,7 @@ private:
 	CStage* m_pStage1;
 	CStage* m_pStage2;
 	CStage* m_pStage3;
+	STAGE	m_CurrentStage;
+	bool	m_bIsStageInit;
 };
 
