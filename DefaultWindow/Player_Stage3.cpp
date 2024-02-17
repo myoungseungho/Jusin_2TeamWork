@@ -15,7 +15,13 @@ void CPlayer_Stage3::Key_Input()
 	float fY(0.f);
 
 	if (GetAsyncKeyState(VK_RIGHT))
-		m_tInfo.fX += m_fSpeed;
+	{
+		CLine* targetLine = CLineMgr::Get_Instance()->GetTargetLine();
+		LINETYPE current_Line_Type = targetLine->Get_Type();
+
+		if (current_Line_Type == NORMAL_LINE)
+			m_tInfo.fX += m_fSpeed;
+	}
 
 	if (GetAsyncKeyState(VK_LEFT))
 		m_tInfo.fX -= m_fSpeed;
@@ -97,8 +103,12 @@ void CPlayer_Stage3::JumpWithoutLineCollision()
 
 	if ((m_fLineY < m_tRect.bottom + threshold))
 	{
-		float fLineOffset = -m_tInfo.fCX * 0.5f;
 		m_fTime = 0.f;
+
+		CLine* targetLine = CLineMgr::Get_Instance()->GetTargetLine();
+		LINETYPE current_Line_Type = targetLine->Get_Type();
+		float fLineOffset = -m_tInfo.fCX * 0.5f;
+
 		m_tInfo.fY = m_fLineY + fLineOffset;
 	}
 }

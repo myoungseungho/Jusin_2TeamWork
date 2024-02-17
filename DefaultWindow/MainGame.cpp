@@ -36,7 +36,7 @@ void CMainGame::Initialize()
 	if (m_pStage3 == nullptr)
 		m_pStage3 = new CStage3;
 
-	m_pStage1->Initialize();
+	m_pStage3->Initialize();
 }
 
 void CMainGame::Update()

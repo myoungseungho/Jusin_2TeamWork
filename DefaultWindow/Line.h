@@ -16,7 +16,7 @@ public:
 
 public:
 	const LINEINFO&		Get_Info() const { return m_tInfo; }
-
+	const LINETYPE&		Get_Type() const { return m_Type; }
 
 protected:
 	LINEINFO		m_tInfo;
