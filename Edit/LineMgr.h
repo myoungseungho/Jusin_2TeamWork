@@ -14,7 +14,7 @@ public:
 	void		Render(HDC hDC);
 	void		Release();
 
-	bool		Collision_Line(float _fX, float* pY);
+	bool		Collision_Line(float _fX, float _fY, float* pY);
 
 	void		Save_Line();
 	void		Load_Line();

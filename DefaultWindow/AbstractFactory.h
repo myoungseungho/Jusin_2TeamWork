@@ -36,6 +36,5 @@ public:
 
 		return pObj;
 	}
-
 };
 

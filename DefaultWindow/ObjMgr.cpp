@@ -56,8 +56,8 @@ void CObjMgr::Late_Update()
 		}
 	}
 
-	CCollisionMgr::Collision_Sphere(m_ObjList[OBJ_BULLET], m_ObjList[OBJ_MONSTER]);
-	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PLAYER]);
+	//CCollisionMgr::Collision_Sphere(CObjMgr::Get_Instance()->Get_Obj(OBJ_PLAYER), m_ObjList[OBJ_MONSTER]);
+	//CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PLAYER]);
 }
 
 void CObjMgr::Render(HDC hDC)
@@ -85,7 +85,7 @@ CObj * CObjMgr::Get_Target(OBJID eID, CObj * pObj)
 {
 	if (m_ObjList[eID].empty())
 		return nullptr;
-
+	
 	CObj*	pTarget = nullptr;
 	float	fDistance(0.f);
 
@@ -97,7 +97,7 @@ CObj * CObjMgr::Get_Target(OBJID eID, CObj * pObj)
 		float	fWidth = abs(pObj->Get_Info().fX - iter->Get_Info().fX);
 		float	fHeight = abs(pObj->Get_Info().fY - iter->Get_Info().fY);
 
-		float	fDiagonal = sqrt(fWidth * fWidth + fHeight * fHeight);
+		float	fDiagonal = (float)sqrt(fWidth * fWidth + fHeight * fHeight);
 
 		if ((!pTarget) || (fDistance > fDiagonal))
 		{

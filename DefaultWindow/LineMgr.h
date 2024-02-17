@@ -13,7 +13,7 @@ public:
 	void		Render(HDC hDC);
 	void		Release();
 
-	bool		Collision_Line(float _fX, float* pY);
+	bool		Collision_Line(float _fX, float _fY, float* pY);
 	void		Load_Line();
 
 public:
@@ -38,7 +38,5 @@ public:
 private:
 	static CLineMgr*		m_pInstance;
 	list<CLine*>			m_Linelist;
-
-
 };
 

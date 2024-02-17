@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Bullet.h"
+#include "ScrollMgr.h"
 
 CBullet::CBullet()
 {
@@ -15,7 +16,7 @@ void CBullet::Initialize()
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
 
-	m_fSpeed = 3.f;
+	m_fSpeed = 8.f;
 }
 
 int CBullet::Update()
@@ -23,8 +24,8 @@ int CBullet::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_tInfo.fX += m_fSpeed * cos(m_fAngle * (PI / 180.f));
-	m_tInfo.fY -= m_fSpeed * sin(m_fAngle * (PI / 180.f));
+	m_tInfo.fX += m_fSpeed * (float)cos(m_fAngle * (PI / 180.f));
+	m_tInfo.fY -= m_fSpeed * (float)sin(m_fAngle * (PI / 180.f));
 	
 	__super::Update_Rect();
 
@@ -42,10 +43,11 @@ void CBullet::Late_Update()
 
 void CBullet::Render(HDC hDC)
 {
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	Ellipse(hDC,
-		m_tRect.left,
+		m_tRect.left + iScrollX,
 		m_tRect.top,
-		m_tRect.right,
+		m_tRect.right + iScrollX,
 		m_tRect.bottom);
 }
 

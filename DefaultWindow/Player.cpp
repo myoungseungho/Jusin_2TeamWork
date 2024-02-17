@@ -10,9 +10,11 @@
 #include "KeyMgr.h"
 #include "ScrollMgr.h"
 
+
 CPlayer::CPlayer()
-	: m_pBullet(nullptr), m_pShield(nullptr)
+	//: m_pBullet(nullptr), m_pShield(nullptr)
 {
+	m_pPlayer_Stage1 = nullptr;
 }
 
 CPlayer::~CPlayer()
@@ -22,38 +24,42 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize()
 {
-	m_tInfo  = {100.f, WINCY / 2.f, 100.f, 100.f };
-	m_fSpeed = 10.f;
+	if (!m_pPlayer_Stage1)
+	{
+		m_pPlayer_Stage1 = new CPlayer_Stage1;
+		m_pPlayer_Stage1->Initialize();
+	}
+	
+
+	/*m_fSpeed = 10.f;
 	m_fDistance = 100.f;
 	m_fPower = 20.f;
 	m_fTime = 0.f;
-	m_bJump = false;
+	m_bJump = false;*/
 }
 
 int CPlayer::Update()
 {
-	Key_Input();
-	
-	__super::Update_Rect();
+	//Key_Input();
+			__super::Update_Rect();
+
+	m_pPlayer_Stage1->Update();
 
 	return OBJ_NOEVENT;
 }
 
 void CPlayer::Late_Update()
 {
-	// degree to radian
-
-	//m_tPosin.x = LONG(m_tInfo.fX + m_fDistance * cos(m_fAngle * (PI / 180.f)));
-	//m_tPosin.y = LONG(m_tInfo.fY - m_fDistance * sin(m_fAngle * (PI / 180.f)));
-
-	Jump();
-	OffSet();
+	m_pPlayer_Stage1->Late_Update();
+	//Jump();
+	//OffSet();
 }
 
 void CPlayer::Render(HDC hDC)
 {
+	m_pPlayer_Stage1->Render(hDC);
 
-	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 
 	Rectangle(hDC, 
 			m_tRect.left + iScrollX,
@@ -61,80 +67,73 @@ void CPlayer::Render(HDC hDC)
 			m_tRect.right + iScrollX,
 			m_tRect.bottom);
 
-	// Æ÷½Å
-//	MoveToEx(hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
-	//LineTo(hDC, (int)m_tPosin.x, (int)m_tPosin.y);
 
 }
 
 void CPlayer::Release()
 {
+	Safe_Delete<CObj*>(m_pPlayer_Stage1);
 }
 
-void CPlayer::Key_Input()
-{	
-	float fY(0.f);
+//void CPlayer::Key_Input()
+//{	
+//	float fY(0.f);
+//
+//	if (GetAsyncKeyState(VK_RIGHT))
+//	{ 
+//		m_tInfo.fX += m_fSpeed;
+//
+//	}
+//
+//	if (GetAsyncKeyState(VK_LEFT))
+//	{
+//		m_tInfo.fX -= m_fSpeed;
+//	}
+//
+//	if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
+//	{
+//		m_bJump = true;
+//	}
+//}
 
-	if (GetAsyncKeyState(VK_RIGHT))
-	{ 
-		m_tInfo.fX += m_fSpeed;
+//void CPlayer::Jump()
+//{
+//	float	fY(0.f);
+//
+//	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
+//
+//	if (m_bJump)
+//	{
+//		m_tInfo.fY -= m_fPower * m_fTime - 9.8f * m_fTime * m_fTime * 0.5f;
+//		m_fTime += 0.2f;
+//
+//		if (bLineCol && fY < m_tInfo.fY)
+//		{
+//			m_bJump = false;
+//			m_fTime = 0.f;
+//			m_tInfo.fY = fY;
+//		}
+//
+//	}
+//	else if (bLineCol)
+//	{
+//		m_tInfo.fY = fY;
+//	}
+//}
 
-		/*if (CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY))
-			m_tInfo.fY = fY;*/
-	}
-
-	if (GetAsyncKeyState(VK_LEFT))
-	{
-		m_tInfo.fX -= m_fSpeed;
-
-		/*if (CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY))
-			m_tInfo.fY = fY;*/
-	}
-
-	if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
-	{
-		m_bJump = true;
-	}
-}
-
-void CPlayer::Jump()
-{
-	float	fY(0.f);
-
-	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
-
-	if (m_bJump)
-	{
-		m_tInfo.fY -= m_fPower * m_fTime - 9.8f * m_fTime * m_fTime * 0.5f;
-		m_fTime += 0.2f;
-
-		if (bLineCol && fY < m_tInfo.fY)
-		{
-			m_bJump = false;
-			m_fTime = 0.f;
-			m_tInfo.fY = fY;
-		}
-
-	}
-	else if (bLineCol)
-	{
-		m_tInfo.fY = fY;
-	}
-}
-
-void CPlayer::OffSet()
-{
-	int	iOffSetMinX = 100.f;
-	int	iOffSetMaxX = 700.f;
-
-	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-
-	if (iOffSetMinX > m_tInfo.fX + iScrollX)
-		CScrollMgr::Get_Instance()->Set_ScrollX(m_fSpeed);
-
-	if (iOffSetMaxX < m_tInfo.fX + iScrollX)
-		CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
-}
+//void CPlayer::OffSet()
+//{
+//	int	iOffSetMinX = 100.f;
+//	int	iOffSetMaxX = 700.f;
+//
+//	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+//
+//	if (iOffSetMinX > m_tInfo.fX + iScrollX)
+//		CScrollMgr::Get_Instance()->Set_ScrollX(m_fSpeed);
+//
+//	if (iOffSetMaxX < m_tInfo.fX + iScrollX)
+//		CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
+//}
 
 CObj * CPlayer::Create_Shield()
 {

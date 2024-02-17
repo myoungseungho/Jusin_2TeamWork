@@ -79,7 +79,7 @@ void CLineMgr::Release()
 	m_Linelist.clear();
 }
 
-bool CLineMgr::Collision_Line(float _fX, float * pY)
+bool CLineMgr::Collision_Line(float _fX, float _fY, float * pY)
 {
 	if (m_Linelist.empty())
 		return false;
@@ -89,7 +89,7 @@ bool CLineMgr::Collision_Line(float _fX, float * pY)
 	for (auto& iter : m_Linelist)
 	{
 		if (iter->Get_Info().tLeft.fX <= _fX &&
-			iter->Get_Info().tRight.fX >= _fX)
+			iter->Get_Info().tRight.fX >= _fX && iter->Get_Info().tLeft.fY >= _fY)
 		{
 			pTarget = iter;
 		}

@@ -40,8 +40,8 @@ int CScrewBullet::Update()
 
 	m_fRotAngle += m_fRotSpeed;
 
-	m_tInfo.fX = m_tCenter.x + m_fDistance * cos(m_fRotAngle * (PI / 180.f));
-	m_tInfo.fY = m_tCenter.y - m_fDistance * sin(m_fRotAngle * (PI / 180.f));
+	m_tInfo.fX = (float)m_tCenter.x + m_fDistance * cos(m_fRotAngle * (PI / 180.f));
+	m_tInfo.fY = (float)m_tCenter.y - m_fDistance * sin(m_fRotAngle * (PI / 180.f));
 	
 	__super::Update_Rect();
 

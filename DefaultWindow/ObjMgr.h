@@ -17,7 +17,11 @@ public:
 
 public:
 	CObj*	Get_Player() { return m_ObjList[OBJ_PLAYER].front(); }
+	CObj*	Get_Item() { return m_ObjList[OBJ_ITEM].front(); }
+	CObj* Get_Bullet() { return m_ObjList[OBJ_BULLET].front(); }
+
 	CObj*	Get_Target(OBJID eID, CObj* pObj);
+	list<CObj*> GetObjList(OBJID eID) { return m_ObjList[eID]; }
 
 public:
 	static		CObjMgr*		Get_Instance()
@@ -39,7 +43,6 @@ public:
 
 private:
 	list<CObj*>		m_ObjList[OBJ_END];
-
 	static CObjMgr*	m_pInstance;
 
 };
