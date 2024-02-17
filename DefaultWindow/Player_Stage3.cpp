@@ -65,7 +65,7 @@ void CPlayer_Stage3::NormalJump()
 		if (!m_bHasTargetLine)
 		{
 			m_fLineY = m_tInfo.fY; // 라인의 Y값
-			CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &m_fLineY);
+			CLineMgr::Get_Instance()->Collision_Line_Stage3(m_tInfo.fX, &m_fLineY);
 			m_bHasTargetLine = true;
 		}
 
@@ -83,7 +83,7 @@ void CPlayer_Stage3::NormalJump()
 void CPlayer_Stage3::JumpWithoutLineCollision()
 {
 	m_fLineY = m_tInfo.fY; // 라인의 Y값
-	CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &m_fLineY);
+	CLineMgr::Get_Instance()->Collision_Line_Stage3(m_tInfo.fX, &m_fLineY);
 
 	float threshold = 3.f;
 	bool bIsGround = threshold > abs(m_fLineY - m_tRect.bottom);

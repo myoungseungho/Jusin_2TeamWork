@@ -22,6 +22,7 @@
 #include <list>
 #include <algorithm>
 #include <time.h>
+#include <vector>
 
 #ifdef _DEBUG
 

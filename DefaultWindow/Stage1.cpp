@@ -30,10 +30,9 @@ void CStage1::Update()
 
 void CStage1::Late_Update()
 {
-	CCollisionMgr::Collision_Sphere(CObjMgr::Get_Instance()->GetObjList(OBJ_BULLET), CObjMgr::Get_Instance()->GetObjList(OBJ_MONSTER));
-	CCollisionMgr::Collision_RectEx(CObjMgr::Get_Instance()->GetObjList(OBJ_MONSTER), CObjMgr::Get_Instance()->GetObjList(OBJ_PLAYER));
-	CCollisionMgr::Collision_Rect(CObjMgr::Get_Instance()->GetObjList(OBJ_PLAYER), CObjMgr::Get_Instance()->GetObjList(OBJ_ITEM));
-
+	CCollisionMgr::Collision_Sphere(CObjMgr::Get_Instance()->GetObjList_Stage1(OBJ_BULLET), CObjMgr::Get_Instance()->GetObjList_Stage1(OBJ_MONSTER));
+	CCollisionMgr::Collision_RectEx(CObjMgr::Get_Instance()->GetObjList_Stage1(OBJ_MONSTER), CObjMgr::Get_Instance()->GetObjList_Stage1(OBJ_PLAYER));
+	CCollisionMgr::Collision_Rect(CObjMgr::Get_Instance()->GetObjList_Stage1(OBJ_PLAYER), CObjMgr::Get_Instance()->GetObjList_Stage1(OBJ_ITEM));
 }
 
 void CStage1::Render()

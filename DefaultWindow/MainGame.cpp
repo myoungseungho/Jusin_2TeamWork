@@ -11,7 +11,7 @@
 #include "Stage2.h"
 #include "Stage3.h"
 #include "GameMgr.h"
-#include "Spawn.h" //Ãß°¡
+#include "Spawn.h"
 
 CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr)
 {

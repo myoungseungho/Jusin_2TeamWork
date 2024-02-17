@@ -43,7 +43,7 @@ void CMonster_Stage1B::Move()
 void CMonster_Stage1B::Land()
 {
 	float fY = 0.f;
-	bool bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
+	bool bLineCol = CLineMgr::Get_Instance()->Collision_Line_Stage1(m_tInfo.fX, m_tInfo.fY, &fY);
 
 	m_fTime += 0.2f;
 	m_tInfo.fY -= m_fTime - 9.8f * m_fTime * m_fTime * 0.5f;

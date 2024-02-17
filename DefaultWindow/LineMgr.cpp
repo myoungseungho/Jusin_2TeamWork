@@ -37,12 +37,7 @@ void CLineMgr::Release()
 	m_Line_Item_List.clear();
 }
 
-<<<<<<< HEAD
-
-bool CLineMgr::Collision_Line(float _fX, float* pY)
-=======
-bool CLineMgr::Collision_Line(float _fX, float _fY, float * pY)
->>>>>>> Mergeìš©ë°±ì—…
+bool CLineMgr::Collision_Line_Stage3(float _fX, float* pY)
 {
 	if (m_Linelist.empty())
 		return false;
@@ -54,7 +49,6 @@ bool CLineMgr::Collision_Line(float _fX, float _fY, float * pY)
 
 	for (auto& iter : m_Linelist)
 	{
-<<<<<<< HEAD
 		//¶óÀÎ Áß ÇÃ·¹ÀÌ¾î x¿Í °ãÄ¡´Â ¶óÀÎ Ã¼Å©
 		if (iter->Get_Info().tLeft.fX <= _fX &&
 			iter->Get_Info().tRight.fX >= _fX)
@@ -79,14 +73,38 @@ bool CLineMgr::Collision_Line(float _fX, float _fY, float * pY)
 					vecCLine.push_back(iter);
 				}
 			}
+		}
 
-=======
-		
+	}
+
+	if (!pTarget)
+		return false;
+
+	float x1 = pTarget->Get_Info().tLeft.fX;
+	float x2 = pTarget->Get_Info().tRight.fX;
+	float y1 = pTarget->Get_Info().tLeft.fY;
+	float y2 = pTarget->Get_Info().tRight.fY;
+
+	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+	m_targetLine = pTarget;
+
+	return true;
+}
+
+
+bool CLineMgr::Collision_Line_Stage1(float _fX, float _fY, float* pY)
+{
+	if (m_Linelist.empty())
+		return false;
+
+	CLine* pTarget = nullptr;
+
+	for (auto& iter : m_Linelist)
+	{
 		if (iter->Get_Info().tLeft.fX <= _fX && iter->Get_Info().tRight.fX >= _fX && iter->Get_Info().tLeft.fY >= _fY)
 		{
-			
 			pTarget = iter;
->>>>>>> Mergeìš©ë°±ì—…
 		}
 	}
 

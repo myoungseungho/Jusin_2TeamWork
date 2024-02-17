@@ -90,7 +90,7 @@ void CPlayer::Release()
 void CPlayer::HandleMove()
 {
 	float	fY = Get_Info().fY;
-	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
+	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line_Stage3(m_tInfo.fX, &fY);
 
 	if (m_bJump)
 	{

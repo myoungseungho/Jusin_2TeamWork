@@ -99,7 +99,7 @@ void CPlayer_Stage1::Key_Input()
 
 void CPlayer_Stage1::Jump()
 {
-	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, m_tInfo.fY, &fY);
+	bLineCol = CLineMgr::Get_Instance()->Collision_Line_Stage1(m_tInfo.fX, m_tInfo.fY, &fY);
 
 	if (m_bJump)
 	{
