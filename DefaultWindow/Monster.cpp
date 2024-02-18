@@ -20,6 +20,10 @@ CMonster::~CMonster()
 	Release();
 }
 
+void CMonster::Move()
+{
+}
+
 void CMonster::ItemDrop()
 {
 	CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
@@ -51,6 +55,10 @@ void CMonster::ItemDrop()
 
 }
 
+void CMonster::Initialize()
+{
+}
+
 int CMonster::Update()
 {
 	if (m_bDead)
@@ -66,13 +74,6 @@ int CMonster::Update()
 
 void CMonster::Late_Update()
 {
-	//if (m_tInfo.fCX > 483.f)
-	//{
-	//	for (int i = 0; i < 3; i++)
-	//	{
-	//		Initialize();
-	//	}
-	//}
 }
 
 void CMonster::Render(HDC hDC)

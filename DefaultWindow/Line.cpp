@@ -6,24 +6,20 @@ CLine::CLine() : m_Type(NORMAL_LINE), m_dRadian(0)
 {
 }
 
-CLine::CLine(LINEPOINT& _tLeft, LINEPOINT& _tRight)
-	: m_tInfo(_tLeft, _tRight), m_Type(NORMAL_LINE), m_dRadian(0)
-
-CLine::CLine()
-	: m_bGameover(false)
+CLine::CLine(MAPPOINT& _tLeft, MAPPOINT& _tRight)
+	: m_tInfo(_tLeft, _tRight), m_Type(NORMAL_LINE), m_dRadian(0), m_tLineInfo(_tLeft, _tRight)
 {
+
 }
 
-CLine::CLine(MAPPOINT & _tLeft, MAPPOINT& _tRight)
-	: m_tLineInfo(_tLeft, _tRight), m_bGameover(false)
-{
-}
 
 CLine::CLine(LINEINFO& tInfo)
-	: m_tInfo(tInfo), m_Type(NORMAL_LINE), m_dRadian(0), m_tLineInfo(tInfo), m_bGameover(false)
+	: m_tInfo(tInfo), m_Type(NORMAL_LINE), m_dRadian(0), m_tLineInfo(tInfo)
 {
 
 }
+
+
 CLine::~CLine()
 {
 }

@@ -14,7 +14,6 @@ public:
 	virtual void		Initialize();
 	virtual void		Render(HDC hDC);
 	void		Late_Update();
-	void		Render(HDC hDC);
 
 public:
 	const LINEINFO& Get_Info() const { return m_tInfo; }
@@ -26,10 +25,9 @@ protected:
 	LINETYPE		m_Type;
 
 	double m_dRadian;
-	const LINEINFO&		Get_Info() const { return m_tLineInfo; }
+	const LINEINFO& Get_Info_Stage2() const { return m_tLineInfo; }
 
 private:
 	LINEINFO		m_tLineInfo;
-	bool					m_bGameover;
 };
 

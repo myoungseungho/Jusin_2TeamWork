@@ -9,15 +9,15 @@ public:
 	virtual ~CMonster();
 
 public:
-<<<<<<< HEAD
-	virtual void Move()		PURE;
+	virtual void Move();
 	void ItemDrop();
+
 public:
-	virtual void Initialize() {};
-	virtual int Update() { return OBJ_NOEVENT; }
-	virtual void Late_Update() {};
-	virtual void Render(HDC hDC) {};
-	virtual void Release() {};
+	virtual void Initialize();
+	virtual int Update();
+	virtual void Late_Update();
+	virtual void Render(HDC hDC);
+	virtual void Release();
 
 protected:
 	float m_fTargetPosX;
@@ -25,18 +25,4 @@ protected:
 	int m_iItemPercent;
 	int m_iHp;
 };
-=======
-	virtual void Initialize() override;
-	virtual int Update() override;
-	virtual void Late_Update() override;
-	virtual void Render(HDC hDC) override;
-	virtual void Release() override;
-
-public:
 	
-
-private:
-
-
-};
->>>>>>> 수기꺼

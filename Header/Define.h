@@ -71,7 +71,7 @@ enum LINETYPE
 	NORMAL_LINE,
 	WALL_LINE_RightUp,
 	WALL_LINE_RightDown,
-}
+};
 
 enum DIRECTION_RECT
 {
@@ -107,6 +107,8 @@ typedef struct tagMapPoint
 	tagMapPoint(float _fX, float _fY) : fX(_fX), fY(_fY) {}
 
 }MAPPOINT;
+
+
 
 typedef	struct tagLineInfo
 {

@@ -17,11 +17,6 @@ CLineMgr::~CLineMgr()
 void CLineMgr::Initialize(void)
 {
 	Load_Line();
-	Load_Rect();
-	Load_Triangle();
-
-	for (auto& iter : m_Rectlist)
-		iter->Initialize();
 }
 
 void CLineMgr::Late_Update()
@@ -40,6 +35,7 @@ void CLineMgr::Render(HDC hDC)
 		iter->Render(hDC);
 
 	for (auto& iter : m_Line_Item_List)
+		iter->Render(hDC);
 
 	for (auto& iter : m_Rectlist)
 		iter->Render(hDC);
@@ -54,18 +50,15 @@ void CLineMgr::Release()
 
 	for_each(m_Line_Item_List.begin(), m_Line_Item_List.end(), Safe_Delete<CLine*>);
 	m_Line_Item_List.clear();
-}
 
-bool CLineMgr::Collision_Line_Stage3(float _fX, float* pY)
-{
 	for_each(m_Rectlist.begin(), m_Rectlist.end(), Safe_Delete<CRect*>);
 	m_Rectlist.clear();
+
 	for_each(m_Trianglelist.begin(), m_Trianglelist.end(), Safe_Delete<CTriangle*>);
 	m_Trianglelist.clear();
 }
 
-
-bool CLineMgr::Collision_Line(float _fX, float * pY)
+bool CLineMgr::Collision_Line_Stage3(float _fX, float* pY)
 {
 	if (m_Linelist.empty())
 		return false;
@@ -116,6 +109,37 @@ bool CLineMgr::Collision_Line(float _fX, float * pY)
 	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
 
 	m_targetLine = pTarget;
+
+	return true;
+}
+
+
+bool CLineMgr::Collision_Line(float _fX, float* pY)
+{
+	if (m_Linelist.empty())
+		return false;
+
+	CLine* pTarget = nullptr;
+
+	for (auto& iter : m_Linelist)
+	{
+		if (iter->Get_Info().tLeft.fX <= _fX &&
+			iter->Get_Info().tRight.fX >= _fX)
+		{
+			pTarget = iter;
+		}
+	}
+
+
+	if (!pTarget)
+		return false;
+
+	float x1 = pTarget->Get_Info().tLeft.fX;
+	float x2 = pTarget->Get_Info().tRight.fX;
+	float y1 = pTarget->Get_Info().tLeft.fY;
+	float y2 = pTarget->Get_Info().tRight.fY;
+
+	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
 
 	return true;
 }
@@ -321,7 +345,7 @@ bool CLineMgr::Collision_Triangle(float _fX, float _fY, float* pY, float fLife)
 	if (!pTarget)
 		return false;
 
-	
+
 	if (_fY < pTarget->Get_Info().tRightBottom_t.fY &&
 		pTarget->Get_Info().tTop.fY > pTarget->Get_Info().tLeftBottom_t.fY)
 	{
@@ -334,20 +358,20 @@ bool CLineMgr::Collision_Triangle(float _fX, float _fY, float* pY, float fLife)
 	}
 
 	else if (_fY <= pTarget->Get_Info().tTop.fY &&
-				pTarget->Get_Info().tTop.fY < pTarget->Get_Info().tLeftBottom_t.fY)
-	
-		{
-			float x1 = pTarget->Get_Info().tLeftBottom_t.fX;
-			float x2 = pTarget->Get_Info().tRightBottom_t.fX;
-			float y1 = pTarget->Get_Info().tLeftBottom_t.fY;
-			float y2 = pTarget->Get_Info().tRightBottom_t.fY;
+		pTarget->Get_Info().tTop.fY < pTarget->Get_Info().tLeftBottom_t.fY)
 
-			*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+	{
+		float x1 = pTarget->Get_Info().tLeftBottom_t.fX;
+		float x2 = pTarget->Get_Info().tRightBottom_t.fX;
+		float y1 = pTarget->Get_Info().tLeftBottom_t.fY;
+		float y2 = pTarget->Get_Info().tRightBottom_t.fY;
 
-			fLife -= 1.f;
-		}
-	
-	
+		*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+		fLife -= 1.f;
+	}
+
+
 	else
 	{
 		return false;
@@ -359,7 +383,15 @@ void CLineMgr::Load_Line()
 	STAGE currentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 
 	if (currentStage == STAGE_1 || currentStage == STAGE_2)
+	{
 		Load_Stage1_And_Stage2_Line(currentStage);
+
+		if (currentStage == STAGE_2)
+		{
+			Load_Rect();
+			Load_Triangle();
+		}
+	}
 	else if (currentStage == STAGE_3)
 		Load_Stage3_Line();
 }
@@ -398,10 +430,9 @@ void CLineMgr::Load_Stage1_And_Stage2_Line(STAGE _stage)
 
 	DWORD	dwByte(0);
 
-	LINEINFO		tInfo{};
 	LINEINFO		tLineInfo{};
-	RECTINFO		tRectInfo{};
-	TRIANGLEINFO		tTriangleInfo{};
+	//RECTINFO		tRectInfo{};
+	//TRIANGLEINFO		tTriangleInfo{};
 
 	while (true)
 	{
@@ -411,8 +442,8 @@ void CLineMgr::Load_Stage1_And_Stage2_Line(STAGE _stage)
 			break;
 
 		m_Linelist.push_back(new CLine(tLineInfo));
-		m_Rectlist.push_back(new CRect(tRectInfo));
-		m_Trianglelist.push_back(new CTriangle(tTriangleInfo));
+		/*m_Rectlist.push_back(new CRect(tRectInfo));
+		m_Trianglelist.push_back(new CTriangle(tTriangleInfo));*/
 	}
 
 	CloseHandle(hFile);
@@ -420,7 +451,6 @@ void CLineMgr::Load_Stage1_And_Stage2_Line(STAGE _stage)
 	MessageBox(g_hWnd, _T("Load 완료"), L"성공", MB_OK);
 }
 void CLineMgr::Load_Rect()
-
 {
 	HANDLE	hFile = CreateFile(L"../Data/Rect2.dat", // 파일 경로(이름을 명시)
 		GENERIC_READ,		// 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
@@ -437,16 +467,11 @@ void CLineMgr::Load_Rect()
 	}
 
 	DWORD	dwByte(0);
-
-
 	RECTINFO		tRectInfo{};
-
 
 	while (true)
 	{
-
 		ReadFile(hFile, &tRectInfo, sizeof(RECTINFO), &dwByte, NULL);
-
 
 		if (0 == dwByte)
 			break;
@@ -476,18 +501,14 @@ void CLineMgr::Load_Triangle()
 	}
 
 	DWORD	dwByte(0);
-
 	TRIANGLEINFO		tTriangleInfo{};
 
 	while (true)
 	{
-
-
 		ReadFile(hFile, &tTriangleInfo, sizeof(TRIANGLEINFO), &dwByte, NULL);
 
 		if (0 == dwByte)
 			break;
-
 
 		m_Trianglelist.push_back(new CTriangle(tTriangleInfo));
 	}
