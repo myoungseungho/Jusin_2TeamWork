@@ -77,14 +77,20 @@ void CPlayer_Stage3::NormalJump()
 	m_tInfo.fY -= m_fPower * m_fTime - m_fGravity * m_fTime * m_fTime * 0.5f;
 	m_fTime += 0.2f;
 
+	//가장 고점에서 타겟 라인 체크
 	if ((m_fPower * m_fTime) <= (m_fGravity * m_fTime * m_fTime * 0.5f))
 	{
+		//타겟 라인 지정이 안되어있으면 타겟 라인지정
 		if (!m_bHasTargetLine)
 		{
 			m_fLineY = m_tInfo.fY; // 라인의 Y값
 			CLineMgr::Get_Instance()->Collision_Line_Stage3(m_tInfo.fX, &m_fLineY);
 			m_bHasTargetLine = true;
 		}
+
+		//매 프레임 타겟 라인의 Y값 갱신
+		m_fLineY = m_tInfo.fY; // 라인의 Y값
+		CLineMgr::Get_Instance()->GetTargetLineY(m_tInfo.fX, &m_fLineY);
 
 		//라인 충돌했을 때
 		if (m_bHasTargetLine && (m_fLineY < m_tRect.bottom))
@@ -225,6 +231,7 @@ void CPlayer_Stage3::ReflectJump()
 		{
 			float threshold = 30.f;
 			bool bIsGround = threshold > abs(m_fLineY - m_tRect.bottom);
+
 			//포물선 운동을 하다 현재 x의 기준으로 체크 라인이 Normal_Line이고, 이 라인 보다 넘어갔다면? 운동 중지
 			if (CheckLine->Get_Type() == NORMAL_LINE && bIsGround)
 			{
@@ -245,10 +252,10 @@ int CPlayer_Stage3::Update()
 	CPlayer::Update();
 	Key_Input();
 
-	if (m_tInfo.fX > 100.f)
+	/*if (m_tInfo.fX > 100.f)
 	{
 		CGameMgr::Get_Instance()->SetStage(STAGE_END);
-	}
+	}*/
 
 	return OBJ_NOEVENT;
 }

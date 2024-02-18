@@ -195,6 +195,19 @@ CLine* CLineMgr::CheckTargetLine(float _fX, float* pY)
 	return pTarget;
 }
 
+float CLineMgr::GetTargetLineY(float _fX, float* pY)
+{
+	CLine* pTarget = m_targetLine;
+
+	float x1 = pTarget->Get_Info().tLeft.fX;
+	float x2 = pTarget->Get_Info().tRight.fX;
+	float y1 = pTarget->Get_Info().tLeft.fY;
+	float y2 = pTarget->Get_Info().tRight.fY;
+
+	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+	return *pY;
+}
+
 bool CLineMgr::Collision_Line_Stage1(float _fX, float _fY, float* pY)
 {
 	if (m_Linelist.empty())
