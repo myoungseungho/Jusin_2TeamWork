@@ -2,17 +2,17 @@
 #include "Line.h"
 #include "ScrollMgr.h"
 
-CLine::CLine() : m_Type(NORMAL_LINE)
+CLine::CLine() : m_Type(NORMAL_LINE), m_dRadian(0)
 {
 }
 
 CLine::CLine(LINEPOINT& _tLeft, LINEPOINT& _tRight)
-	: m_tInfo(_tLeft, _tRight), m_Type(NORMAL_LINE)
+	: m_tInfo(_tLeft, _tRight), m_Type(NORMAL_LINE), m_dRadian(0)
 {
 }
 
 CLine::CLine(LINEINFO& tInfo)
-	: m_tInfo(tInfo), m_Type(NORMAL_LINE)
+	: m_tInfo(tInfo), m_Type(NORMAL_LINE), m_dRadian(0)
 {
 
 }
@@ -27,12 +27,12 @@ void CLine::Initialize()
 	float x2 = m_tInfo.tRight.fX;
 	float y2 = m_tInfo.tRight.fY;
 
-	double dRadian = atan2(y2 - y1, x2 - x1);
-	double dDegree = (180 / PI) * dRadian;
+	m_dRadian = atan2(y2 - y1, x2 - x1);
+	double m_dDegree = (180 / PI) * m_dRadian;
 
 	// 우상향하는 직선의 경우
 	if (y2 < y1) {
-		if (dDegree >= -90 && dDegree < -60) { // 각도의 절대값이 60도를 초과하면 WALL_LINE
+		if (m_dDegree >= -90 && m_dDegree < -60) { // 각도의 절대값이 60도를 초과하면 WALL_LINE
 			m_Type = WALL_LINE_RightUp;
 		}
 		else {
@@ -41,7 +41,7 @@ void CLine::Initialize()
 	}
 	else if (y1 < y2)
 	{
-		if (dDegree >= 60 && dDegree <= 90)
+		if (m_dDegree >= 60 && m_dDegree <= 90)
 			m_Type = WALL_LINE_RightDown;
 		else
 			m_Type = NORMAL_LINE;

@@ -45,7 +45,6 @@ bool CLineMgr::Collision_Line_Stage3(float _fX, float* pY)
 	CLine* pTarget = nullptr;
 	float fComparison(10000.f);
 	float _fPlayerY = *pY;
-	vector<CLine*> vecCLine;
 
 	for (auto& iter : m_Linelist)
 	{
@@ -70,42 +69,10 @@ bool CLineMgr::Collision_Line_Stage3(float _fX, float* pY)
 				{
 					fComparison = fInterval;
 					pTarget = iter;
-					vecCLine.push_back(iter);
 				}
 			}
 		}
 
-	}
-
-	if (!pTarget)
-		return false;
-
-	float x1 = pTarget->Get_Info().tLeft.fX;
-	float x2 = pTarget->Get_Info().tRight.fX;
-	float y1 = pTarget->Get_Info().tLeft.fY;
-	float y2 = pTarget->Get_Info().tRight.fY;
-
-	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
-
-	m_targetLine = pTarget;
-
-	return true;
-}
-
-
-bool CLineMgr::Collision_Line_Stage1(float _fX, float _fY, float* pY)
-{
-	if (m_Linelist.empty())
-		return false;
-
-	CLine* pTarget = nullptr;
-
-	for (auto& iter : m_Linelist)
-	{
-		if (iter->Get_Info().tLeft.fX <= _fX && iter->Get_Info().tRight.fX >= _fX && iter->Get_Info().tLeft.fY >= _fY)
-		{
-			pTarget = iter;
-		}
 	}
 
 	if (!pTarget)
@@ -172,6 +139,88 @@ bool CLineMgr::Collision_Line_DownJump_Stage3(float _fX, float* pY)
 	float y2 = pTarget->Get_Info().tRight.fY;
 
 	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+	return true;
+}
+
+//내가 현재 체크되고 있는 라인이 어딨는지 알려주는
+CLine* CLineMgr::CheckTargetLine(float _fX, float* pY)
+{
+	if (m_Linelist.empty())
+		return false;
+
+	CLine* pTarget = nullptr;
+	float fComparison(10000.f);
+	float _fPlayerY = *pY;
+
+	for (auto& iter : m_Linelist)
+	{
+		//라인 중 플레이어 x와 겹치는 라인 체크
+		if (iter->Get_Info().tLeft.fX <= _fX &&
+			iter->Get_Info().tRight.fX >= _fX)
+		{
+			float x1 = iter->Get_Info().tLeft.fX;
+			float x2 = iter->Get_Info().tRight.fX;
+			float y1 = iter->Get_Info().tLeft.fY;
+			float y2 = iter->Get_Info().tRight.fY;
+
+			// 해당 라인과 플레이어의 X값에 해당하는 라인의 Y값 구하기.
+			float LineY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+			//LineY가 더 플레이어보다 아래 있어야 한다.
+			if (_fPlayerY <= LineY)
+			{
+				//라인의 Y값들 중에 가장 작은 값을 타겟으로 설정
+				float fInterval = abs(LineY - _fPlayerY);
+				if (fComparison > fInterval)
+				{
+					fComparison = fInterval;
+					pTarget = iter;
+				}
+			}
+		}
+
+	}
+
+	if (!pTarget)
+		return nullptr;
+
+	float x1 = pTarget->Get_Info().tLeft.fX;
+	float x2 = pTarget->Get_Info().tRight.fX;
+	float y1 = pTarget->Get_Info().tLeft.fY;
+	float y2 = pTarget->Get_Info().tRight.fY;
+
+	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+	return pTarget;
+}
+
+bool CLineMgr::Collision_Line_Stage1(float _fX, float _fY, float* pY)
+{
+	if (m_Linelist.empty())
+		return false;
+
+	CLine* pTarget = nullptr;
+
+	for (auto& iter : m_Linelist)
+	{
+		if (iter->Get_Info().tLeft.fX <= _fX && iter->Get_Info().tRight.fX >= _fX && iter->Get_Info().tLeft.fY >= _fY)
+		{
+			pTarget = iter;
+		}
+	}
+
+	if (!pTarget)
+		return false;
+
+	float x1 = pTarget->Get_Info().tLeft.fX;
+	float x2 = pTarget->Get_Info().tRight.fX;
+	float y1 = pTarget->Get_Info().tLeft.fY;
+	float y2 = pTarget->Get_Info().tRight.fY;
+
+	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+	m_targetLine = pTarget;
 
 	return true;
 }

@@ -16,6 +16,7 @@ public:
 	//Stage3
 	bool		Collision_Line_Stage3(float _fX, float* pY);
 	bool		Collision_Line_DownJump_Stage3(float _fX, float* pY);
+	CLine*		CheckTargetLine(float _fX, float* pY);
 
 	void		Load_Line();
 	void		Load_Stage1_And_Stage2_Line(STAGE);

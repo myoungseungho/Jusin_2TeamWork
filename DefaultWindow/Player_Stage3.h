@@ -21,8 +21,10 @@ public:
 	void NormalJump();
 	void JumpWithoutLineCollision();
 	void DownJump();
+	void ReflectJump();
 private:
 	bool m_bHasTargetLine;
+	bool m_bReflectJump;
 	float m_fLineY;
 	float m_fGravity;
 };
