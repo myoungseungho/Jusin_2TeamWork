@@ -64,6 +64,15 @@
     <Filter Include="02. Design\05. ScrollMgr">
       <UniqueIdentifier>{ee5f58f5-4a74-4aee-9b36-01f787d273ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Stage">
+      <UniqueIdentifier>{765d6f1e-af90-489d-a614-9579ee1cda9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Design\03. LineMgr\Rect">
+      <UniqueIdentifier>{1d58f02e-cae2-440f-9f3e-c75a887e4d6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Design\03. LineMgr\Triangle">
+      <UniqueIdentifier>{913e0c4e-e486-4a56-a58d-abe425c9c6de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -129,6 +138,33 @@
     <ClInclude Include="ScrollMgr.h">
       <Filter>02. Design\05. ScrollMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Stage1.h">
+      <Filter>03. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage2.h">
+      <Filter>03. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage3.h">
+      <Filter>03. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>03. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Stage3.h">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Stage1.h">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Stage2.h">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>02. Design\03. LineMgr\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>02. Design\03. LineMgr\Triangle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -181,6 +217,33 @@
     </ClCompile>
     <ClCompile Include="ScrollMgr.cpp">
       <Filter>02. Design\05. ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1.cpp">
+      <Filter>03. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage2.cpp">
+      <Filter>03. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage3.cpp">
+      <Filter>03. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>03. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Stage1.cpp">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Stage2.cpp">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Stage3.cpp">
+      <Filter>01. Obj\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>02. Design\03. LineMgr\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>02. Design\03. LineMgr\Triangle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

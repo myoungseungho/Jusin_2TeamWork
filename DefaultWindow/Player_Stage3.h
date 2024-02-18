@@ -1,24 +1,16 @@
 #pragma once
-#include "Obj.h"
-#include "LineMgr.h"
-
-class CMonster : public CObj
+#include "Player.h"
+class CPlayer_Stage3 :
+    public CPlayer
 {
 public:
-	CMonster();
-	virtual ~CMonster();
-
+	CPlayer_Stage3();
+	virtual ~CPlayer_Stage3();
 public:
 	virtual void Initialize() override;
-	virtual int Update() override;
+	virtual int	 Update() override;
 	virtual void Late_Update() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
-
-public:
-	
-
-private:
-
-
 };
+

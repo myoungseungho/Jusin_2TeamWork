@@ -44,6 +44,8 @@ protected:
 	float		m_fSpeed;
 	float		m_fAngle;
 	float		m_fDistance;
+
+	float 	m_fLife;
 		
 	DIRECTION	m_eDir;
 	bool		m_bDead;

@@ -3,16 +3,17 @@
 #include "ScrollMgr.h"
 
 CLine::CLine()
+	: m_bGameover(false)
 {
 }
 
-CLine::CLine(LINEPOINT & _tLeft, LINEPOINT & _tRight)
-	: m_tInfo(_tLeft, _tRight)
+CLine::CLine(MAPPOINT & _tLeft, MAPPOINT& _tRight)
+	: m_tLineInfo(_tLeft, _tRight), m_bGameover(false)
 {
 }
 
 CLine::CLine(LINEINFO& tInfo)
-	: m_tInfo(tInfo)
+	: m_tLineInfo(tInfo), m_bGameover(false)
 {
 
 }
@@ -20,11 +21,21 @@ CLine::~CLine()
 {
 }
 
+void CLine::Late_Update()
+{
+	m_tLineInfo.tLeft.fX -= 3.f;
+	m_tLineInfo.tRight.fX -= 3.f;
+	 
+	if (m_tLineInfo.tRight.fX < -3629)
+	{
+
+	}
+}
+
 void CLine::Render(HDC hDC)
 {
-
 	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 
-	MoveToEx(hDC, (int)m_tInfo.tLeft.fX + iScrollX, (int)m_tInfo.tLeft.fY, NULL);
-	LineTo(hDC, (int)m_tInfo.tRight.fX + iScrollX, (int)m_tInfo.tRight.fY);
+	MoveToEx(hDC, (int)m_tLineInfo.tLeft.fX + iScrollX, (int)m_tLineInfo.tLeft.fY, NULL);
+	LineTo(hDC, (int)m_tLineInfo.tRight.fX + iScrollX, (int)m_tLineInfo.tRight.fY);
 }
