@@ -25,10 +25,9 @@ public:
 	//Stage1
 	CObj* Get_Player()
 	{
-		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
 		return m_ObjList[OBJ_PLAYER].front();
-
 	}
+
 	CObj* Get_Item_Stage1()
 	{
 		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();

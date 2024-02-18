@@ -14,7 +14,7 @@ public:
 	virtual int	 Update();
 	virtual void Late_Update();
 	virtual void Render(HDC hDC);
-
+	virtual void Release();
 
 private:
 	int m_iScrollX;

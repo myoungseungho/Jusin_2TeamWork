@@ -13,7 +13,7 @@
 #include "GameMgr.h"
 #include "Spawn.h"
 
-CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr), m_CurrentStage(STAGE_3), m_bIsStageInit(false)
+CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr), m_CurrentStage(STAGE_1), m_bIsStageInit(false)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }
@@ -36,7 +36,7 @@ void CMainGame::Initialize()
 	if (m_pStage3 == nullptr)
 		m_pStage3 = new CStage3;
 
-	m_pStage3->Initialize();
+	m_pStage1->Initialize();
 }
 
 void CMainGame::Update()

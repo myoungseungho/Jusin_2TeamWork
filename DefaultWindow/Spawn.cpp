@@ -19,7 +19,7 @@ CSpawn::~CSpawn()
 
 void CSpawn::BossSpawn()
 {
-	m_pTarget = CObjMgr::Get_Instance()->Get_Target(OBJ_PLAYER, this);
+	m_pTarget = CObjMgr::Get_Instance()->Get_Player();
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 
 	if (m_pTarget == nullptr)
@@ -29,7 +29,7 @@ void CSpawn::BossSpawn()
 
 	if (m_fTargetPosX - iScrollX >= 9000.f && m_bCreateBoss)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster_Stage1Boss>::Create(m_fTargetPosX + 300.f, 100.f));
+	 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster_Stage1Boss>::Create(m_fTargetPosX + 300.f, 100.f));
 		m_bCreateBoss = false;
 	}
 }

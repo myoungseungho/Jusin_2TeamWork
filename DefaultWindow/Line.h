@@ -24,9 +24,5 @@ protected:
 	LINETYPE		m_Type;
 
 	double m_dRadian;
-
-protected:
-	LINEINFO		m_tInfo;
-	LINETYPE		m_Type;
 };
 
