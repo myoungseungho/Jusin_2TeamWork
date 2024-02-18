@@ -21,6 +21,7 @@ CMonster_Stage1B::~CMonster_Stage1B()
 
 void CMonster_Stage1B::Move()
 {
+
 	if (m_fDistance > m_fAttackRange)
 	{
 		if(m_fTargetPosX < m_tInfo.fX)
@@ -71,11 +72,15 @@ int CMonster_Stage1B::Update()
 {
 	if (m_bDead)
 	{
-		//ItemDrop();
+		ItemDrop();
 		return OBJ_DEAD;
 	}
 
 	m_pTarget = CObjMgr::Get_Instance()->Get_Target(OBJ_PLAYER, this);
+
+	if (m_pTarget == nullptr)
+		return OBJ_NOEVENT;
+
 	m_fTargetPosX = m_pTarget->Get_Info().fX; //error
 	m_fDistance = abs(m_fTargetPosX - m_tInfo.fX); // 타겟과 몬스터의 거리
 

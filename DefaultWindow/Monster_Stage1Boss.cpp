@@ -13,7 +13,7 @@ CMonster_Stage1Boss::CMonster_Stage1Boss()
 	m_fRandomBullet = 0.f;
 	m_fSkillTimerA = 0.f;
 	m_fSkillTimerB = 0.f;
-	m_fSkillTimerC = 0.f;
+	m_bDeathCheck = true;
 }
 
 CMonster_Stage1Boss::~CMonster_Stage1Boss()
@@ -24,6 +24,10 @@ CMonster_Stage1Boss::~CMonster_Stage1Boss()
 void CMonster_Stage1Boss::Move()
 {
 	m_pTarget = CObjMgr::Get_Instance()->Get_Target(OBJ_PLAYER, this);
+
+	if (m_pTarget == nullptr)
+		return;
+
 	m_fTargetPosX = m_pTarget->Get_Info().fX;
 
 	if (m_pTarget)
@@ -57,7 +61,6 @@ void CMonster_Stage1Boss::Attack()
 		BossPatternB();
 		m_fSkillTimerB = 0.f;
 	}
-
 }
 
 void CMonster_Stage1Boss::BossPatternA()
@@ -75,11 +78,12 @@ void CMonster_Stage1Boss::BossPatternB()
 
 void CMonster_Stage1Boss::BossPatternC()
 {
-	for (int i = 1; i <= 25; ++i)
+	for (int i = 1; (i <= 25) && m_bDeathCheck; ++i)
 	{
 		m_fAngle = (float)i * 7.f;
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTERBULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, -m_fAngle));
 	}
+	m_bDeathCheck = false;
 
 }
 
@@ -95,15 +99,22 @@ int CMonster_Stage1Boss::Update()
 {
 	if (m_bDead)
 	{
-		BossPatternC();
-		CGameMgr::Get_Instance()->SetStage(STAGE_2);
-		return OBJ_DEAD;
+		if (m_bDeathCheck)
+		{
+			BossPatternC();
+			m_fDeathTimer = GetTickCount() / 1000;
+		}
+
+		if (m_fDeathTimer + 2.1f < GetTickCount() / 1000)
+		{
+			CGameMgr::Get_Instance()->SetStage(STAGE_2);
+			return OBJ_DEAD;
+		}
 	}
 
 	m_fMoveTimer++;
 	m_fSkillTimerA++;
 	m_fSkillTimerB++;
-	m_fSkillTimerC++;
 
 	__super::Update_Rect();
 
@@ -113,6 +124,8 @@ int CMonster_Stage1Boss::Update()
 void CMonster_Stage1Boss::Late_Update()
 {
 	Move();
+
+	if(!m_bDead)
 	Attack();
 }
 

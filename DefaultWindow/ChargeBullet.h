@@ -25,5 +25,9 @@ private:
 	float m_fDiagonal;
 	float m_fRadian;
 	float m_fDefaultSize;
+
+private:
+	int m_iScrollX;
+	DWORD m_fDeleteTimer;
 };
 

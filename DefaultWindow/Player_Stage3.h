@@ -25,6 +25,8 @@ public:
 private:
 	bool m_bHasTargetLine;
 	bool m_bReflectJump;
+private:
+	bool m_bHasTargetLine;
 	float m_fLineY;
 	float m_fGravity;
 };

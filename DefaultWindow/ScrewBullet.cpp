@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ScrewBullet.h"
+#include "ScrollMgr.h"
 
 CScrewBullet::CScrewBullet()
 	: m_bStart(true)
@@ -21,6 +22,8 @@ void CScrewBullet::Initialize()
 	m_fRotAngle = 0.f;
 	m_fRotSpeed = 30.f;
 	m_fDistance = 20.f;
+
+	m_fDeleteTimer = GetTickCount() / 1000;
 }
 
 int CScrewBullet::Update()
@@ -50,15 +53,21 @@ int CScrewBullet::Update()
 
 void CScrewBullet::Late_Update()
 {
-	
+	m_iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+
+	if (m_tInfo.fX > WINCX + 50 - m_iScrollX || m_tInfo.fX < -50 + m_iScrollX || m_fDeleteTimer + 2 < GetTickCount() / 1000)
+	{
+		m_bDead = true;
+		m_fDeleteTimer = GetTickCount() / 1000;
+	}
 }
 
 void CScrewBullet::Render(HDC hDC)
 {
 	Ellipse(hDC,
-		m_tRect.left,
+		m_tRect.left + m_iScrollX,
 		m_tRect.top,
-		m_tRect.right,
+		m_tRect.right + m_iScrollX,
 		m_tRect.bottom);
 }
 

@@ -5,7 +5,8 @@
 
 CGuideBullet::CGuideBullet()
 {
-	m_fDeleteBullet = 0.f;
+	m_fDeleteTimer = 0;
+	m_iScrollX = 0;
 }
 
 CGuideBullet::~CGuideBullet()
@@ -20,15 +21,17 @@ void CGuideBullet::Initialize()
 
 	m_fSpeed = 5.f;
 	m_fDistance = 20.f;
+
+	m_fDeleteTimer = GetTickCount() / 1000;
 }
 
 int CGuideBullet::Update()
 {
 	if (m_bDead)
+	{
+		int a = 10;
 		return OBJ_DEAD;
-
-	m_fDeleteBullet++;
-
+	}
 	m_pTarget = CObjMgr::Get_Instance()->Get_Target(OBJ_PLAYER, this);
 
 	if (m_pTarget)
@@ -59,21 +62,21 @@ int CGuideBullet::Update()
 
 void CGuideBullet::Late_Update()
 {
-	if (m_fDeleteBullet > 120.f)
+	m_iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+
+	if (m_tInfo.fX > WINCX + 50 - m_iScrollX || m_tInfo.fX < -50 + m_iScrollX   || m_fDeleteTimer + 2 < GetTickCount() / 1000)
 	{
 		m_bDead = true;
-		m_fDeleteBullet = 0.f;
+		m_fDeleteTimer = GetTickCount() / 1000;
 	}
 }
 
 void CGuideBullet::Render(HDC hDC)
 {
-	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-
 	Ellipse(hDC,
-		m_tRect.left + iScrollX,
+		m_tRect.left + m_iScrollX,
 		m_tRect.top,
-		m_tRect.right + iScrollX,
+		m_tRect.right + m_iScrollX,
 		m_tRect.bottom);
 }
 

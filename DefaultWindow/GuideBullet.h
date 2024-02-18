@@ -14,6 +14,7 @@ public:
 	virtual void Release() override;
 
 private:
-	float m_fDeleteBullet;
+	DWORD m_fDeleteTimer;
+	int m_iScrollX;
 };
 

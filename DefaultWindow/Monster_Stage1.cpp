@@ -17,11 +17,16 @@ CMonster_Stage1::CMonster_Stage1()
 
 CMonster_Stage1 ::~CMonster_Stage1()
 {
+	Release();
 }
 
 void CMonster_Stage1::Move()
 {
 	m_pTarget = CObjMgr::Get_Instance()->Get_Target(OBJ_PLAYER, this);
+
+	if (m_pTarget == nullptr)
+		return;
+
 	m_fTargetPosX = m_pTarget->Get_Info().fX;
 
 	if (m_pTarget)
@@ -59,7 +64,7 @@ int CMonster_Stage1::Update()
 {
 	if (m_bDead)
 	{
-		//ItemDrop();
+		ItemDrop();
 		return OBJ_DEAD;
 	}
 	m_fMoveTimer++;

@@ -4,6 +4,8 @@
 
 CBullet::CBullet()
 {
+	m_iScrollX = 0;
+	m_fDeleteTimer = 0;
 }
 
 CBullet::~CBullet()
@@ -17,6 +19,8 @@ void CBullet::Initialize()
 	m_tInfo.fCY = 30.f;
 
 	m_fSpeed = 8.f;
+
+	m_fDeleteTimer = GetTickCount() / 1000;
 }
 
 int CBullet::Update()
@@ -26,6 +30,8 @@ int CBullet::Update()
 
 	m_tInfo.fX += m_fSpeed * (float)cos(m_fAngle * (PI / 180.f));
 	m_tInfo.fY -= m_fSpeed * (float)sin(m_fAngle * (PI / 180.f));
+
+
 	
 	__super::Update_Rect();
 
@@ -34,20 +40,21 @@ int CBullet::Update()
 
 void CBullet::Late_Update()
 {
-	/*if (100 >= m_tRect.left || WINCX - 100 <= m_tRect.right ||
-		100 >= m_tRect.top || WINCY - 100 <= m_tRect.bottom)
+	m_iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+
+	if (m_tInfo.fX > WINCX + 50 - m_iScrollX || m_tInfo.fX < -50 + m_iScrollX || m_fDeleteTimer + 2 < GetTickCount() / 1000)
 	{
 		m_bDead = true;
-	}*/
+		m_fDeleteTimer = GetTickCount() / 1000;
+	}
 }
 
 void CBullet::Render(HDC hDC)
 {
-	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	Ellipse(hDC,
-		m_tRect.left + iScrollX,
+		m_tRect.left + m_iScrollX,
 		m_tRect.top,
-		m_tRect.right + iScrollX,
+		m_tRect.right + m_iScrollX,
 		m_tRect.bottom);
 }
 

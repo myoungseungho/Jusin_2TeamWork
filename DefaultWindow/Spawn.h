@@ -10,6 +10,9 @@ public:
 	virtual ~CSpawn();
 
 public:
+	void BossSpawn();
+
+public:
 	virtual void		Initialize();
 	virtual int			Update();
 	virtual void		Late_Update();
@@ -17,7 +20,7 @@ public:
 	virtual void		Release();
 	
 private:
-	float m_fCreateBossTimer;
 	bool m_bCreateBoss;
+	float m_fTargetPosX;
 };
 

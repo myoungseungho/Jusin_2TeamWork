@@ -12,6 +12,9 @@ CChargeBullet::CChargeBullet()
 	 m_fDiagonal = 0.f;
 	 m_fRadian = 0.f;
 	 m_fDefaultSize = 0.f;
+
+	 m_iScrollX = 0;
+	 m_fDeleteTimer = 0;
 }
 
 CChargeBullet::~CChargeBullet()
@@ -41,9 +44,10 @@ void CChargeBullet::Target()
 
 void CChargeBullet::Initialize()
 {
-
 	m_fDefaultSize = 15.f;
 	m_fSpeed = 8.f;
+
+	m_fDeleteTimer = GetTickCount() / 1000;
 }
 
 int CChargeBullet::Update()
@@ -67,15 +71,22 @@ int CChargeBullet::Update()
 
 void CChargeBullet::Late_Update()
 {
+	m_iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+
+if (m_tInfo.fX > WINCX + 50 - m_iScrollX || m_tInfo.fX < -50 + m_iScrollX || m_fDeleteTimer + 2 < GetTickCount() / 1000)
+{
+	m_bDead = true;
+	m_fDeleteTimer = GetTickCount() / 1000;
+}
 }
 
 void CChargeBullet::Render(HDC hDC)
 {
-	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	
 	Ellipse(hDC,
-		m_tRect.left + iScrollX,
+		m_tRect.left + m_iScrollX,
 		m_tRect.top,
-		m_tRect.right + iScrollX,
+		m_tRect.right + m_iScrollX,
 		m_tRect.bottom);
 }
 

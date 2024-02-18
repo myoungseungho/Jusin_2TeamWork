@@ -45,6 +45,7 @@ bool CLineMgr::Collision_Line_Stage3(float _fX, float* pY)
 	CLine* pTarget = nullptr;
 	float fComparison(10000.f);
 	float _fPlayerY = *pY;
+	vector<CLine*> vecCLine;
 
 	for (auto& iter : m_Linelist)
 	{
@@ -69,6 +70,7 @@ bool CLineMgr::Collision_Line_Stage3(float _fX, float* pY)
 				{
 					fComparison = fInterval;
 					pTarget = iter;
+					vecCLine.push_back(iter);
 				}
 			}
 		}
@@ -217,7 +219,7 @@ bool CLineMgr::Collision_Line_Stage1(float _fX, float _fY, float* pY)
 
 	for (auto& iter : m_Linelist)
 	{
-		if (iter->Get_Info().tLeft.fX <= _fX && iter->Get_Info().tRight.fX >= _fX && iter->Get_Info().tLeft.fY >= _fY)
+		if (iter->Get_Info().tLeft.fX <= _fX && iter->Get_Info().tRight.fX >= _fX && (iter->Get_Info().tLeft.fY >= _fY || iter->Get_Info().tRight.fY >= _fY))
 		{
 			pTarget = iter;
 		}
@@ -225,6 +227,61 @@ bool CLineMgr::Collision_Line_Stage1(float _fX, float _fY, float* pY)
 
 	if (!pTarget)
 		return false;
+
+	float x1 = pTarget->Get_Info().tLeft.fX;
+	float x2 = pTarget->Get_Info().tRight.fX;
+	float y1 = pTarget->Get_Info().tLeft.fY;
+	float y2 = pTarget->Get_Info().tRight.fY;
+
+	*pY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+	m_targetLine = pTarget;
+
+	return true;
+}
+
+bool CLineMgr::Collision_Line_DownJump_Stage3(float _fX, float* pY)
+{
+	if (m_Linelist.empty())
+		return false;
+
+	float _fPlayerY = *pY;
+	vector<pair<CLine*, float>> vecCLine;
+
+	for (auto& iter : m_Linelist)
+	{
+		//라인 중 플레이어 x와 겹치는 라인 체크
+		if (iter->Get_Info().tLeft.fX <= _fX &&
+			iter->Get_Info().tRight.fX >= _fX)
+		{
+			float x1 = iter->Get_Info().tLeft.fX;
+			float x2 = iter->Get_Info().tRight.fX;
+			float y1 = iter->Get_Info().tLeft.fY;
+			float y2 = iter->Get_Info().tRight.fY;
+
+			// 해당 라인과 플레이어의 X값에 해당하는 라인의 Y값 구하기.
+			float LineY = ((y2 - y1) / (x2 - x1)) * (_fX - x1) + y1;
+
+			if (LineY >= _fPlayerY)
+			{
+				//라인의 Y값들 중에 가장 작은 값을 타겟으로 설정
+				float fInterval = abs(LineY - _fPlayerY);
+				vecCLine.push_back(make_pair(iter, LineY));
+			}
+		}
+	}
+
+	if (vecCLine.size() < 2)
+		return false; // 두 번째로 작은 요소를 찾을 수 없는 경우
+
+	// vecCLineWithY를 LineY 값에 따라 정렬
+	sort(vecCLine.begin(), vecCLine.end(), [](const pair<CLine*, float>& a, const pair<CLine*, float>& b) {
+		return a.second < b.second;
+		});
+
+	// 정렬된 벡터에서 두 번째 요소 선택
+	CLine* pTarget = vecCLine[1].first;
+	float secondSmallestY = vecCLine[1].second;
 
 	float x1 = pTarget->Get_Info().tLeft.fX;
 	float x2 = pTarget->Get_Info().tRight.fX;

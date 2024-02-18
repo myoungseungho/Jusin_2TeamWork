@@ -46,7 +46,7 @@ void CPlayer::Late_Update()
 
 void CPlayer::Render(HDC hDC)
 {
-	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	Rectangle(hDC,
 		m_tRect.left + iScrollX,
 		m_tRect.top,
@@ -113,8 +113,8 @@ void CPlayer::HandleMove()
 
 void CPlayer::OffSet()
 {
-	int	iOffSetMinX = 100.f;
-	int	iOffSetMaxX = 700.f;
+	int	iOffSetMinX = 100;
+	int	iOffSetMaxX = 700;
 
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 

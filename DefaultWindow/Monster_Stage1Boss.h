@@ -28,6 +28,8 @@ private:
 	float m_fRandomBullet;
 	float m_fSkillTimerA;
 	float m_fSkillTimerB;
-	float m_fSkillTimerC;
+
+	DWORD m_fDeathTimer;
+	bool  m_bDeathCheck;
 };
 

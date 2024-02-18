@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Stage2.h"
 #include "GameMgr.h"
+
 CStage2::CStage2()
 {
 }
