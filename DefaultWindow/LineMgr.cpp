@@ -37,9 +37,6 @@ void CLineMgr::Render(HDC hDC)
 	for (auto& iter : m_Linelist)
 		iter->Render(hDC);
 
-	for (auto& iter : m_Line_Item_List)
-		iter->Render(hDC);
-
 	for (auto& iter : m_Rectlist)
 		iter->Render(hDC);
 

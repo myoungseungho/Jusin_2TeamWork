@@ -58,10 +58,10 @@ void CLine::Initialize()
 
 void CLine::Late_Update()
 {
-	m_tLineInfo.tLeft.fX += 3.f;
-	m_tLineInfo.tRight.fX += 3.f;
+	m_tLineInfo.tLeft.fX -= 3.f;
+	m_tLineInfo.tRight.fX -= 3.f;
 
-	if (m_tLineInfo.tRight.fX < 3629)
+	if (m_tLineInfo.tRight.fX < -3629)
 	{
 		CGameMgr::Get_Instance()->SetStage(STAGE_3);
 	}

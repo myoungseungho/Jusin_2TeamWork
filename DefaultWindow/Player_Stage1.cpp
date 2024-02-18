@@ -95,11 +95,7 @@ void CPlayer_Stage1::Key_Input()
 			break;
 		}
 	}
-
-	if (CKeyMgr::Get_Instance()->Key_Down('G'))
-	{
-		CGameMgr::Get_Instance()->SetStage(STAGE_2);
-	}
+	
 }
 
 void CPlayer_Stage1::Jump()

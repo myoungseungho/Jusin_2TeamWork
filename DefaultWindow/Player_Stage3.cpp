@@ -252,10 +252,10 @@ int CPlayer_Stage3::Update()
 	CPlayer::Update();
 	Key_Input();
 
-	/*if (m_tInfo.fX > 100.f)
+	if (m_tInfo.fX > 3873.f)
 	{
 		CGameMgr::Get_Instance()->SetStage(STAGE_END);
-	}*/
+	}
 
 	return OBJ_NOEVENT;
 }
