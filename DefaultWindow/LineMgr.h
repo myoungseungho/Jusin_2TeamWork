@@ -74,6 +74,5 @@ private:
 	CLine*					m_targetLine;
 	MAPPOINT				m_tLinePoint[END];
 	MAPPOINT				m_tRectPoint[RECT_END];
-
 };
 

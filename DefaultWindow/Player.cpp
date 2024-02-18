@@ -60,7 +60,7 @@ void CPlayer::Release()
 }
 
 
-	void CPlayer::Key_Input()
+void CPlayer::Key_Input()
 {
 	float fY(0.f);
 
@@ -121,7 +121,7 @@ void CPlayer::OffSet()
 }
 
 
-CObj * CPlayer::Create_Shield()
+CObj* CPlayer::Create_Shield()
 {
 	CObj* pObj = CAbstractFactory<CShield>::Create();
 	pObj->Set_Target(this);

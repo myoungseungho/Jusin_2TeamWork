@@ -7,7 +7,6 @@ public:
 	CPlayer_Stage1();
 	virtual ~CPlayer_Stage1();
 
-
 public:
 	void SetHp(int _iHp) { m_iHp += _iHp; }
 

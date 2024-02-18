@@ -43,7 +43,14 @@ int CPlayer_Stage2::Update()
 	if (m_fLife == 0)
 		return OBJ_DEAD;
 
-	Key_Input();
+	if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
+	{
+		m_bJump = true;
+	}
+	else if (CKeyMgr::Get_Instance()->Key_Up('G'))
+	{
+		CGameMgr::Get_Instance()->SetStage(STAGE_3);
+	}
 
 	__super::Update_Rect();
 

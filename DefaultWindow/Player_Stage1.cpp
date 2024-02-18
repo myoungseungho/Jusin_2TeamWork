@@ -14,7 +14,7 @@ CPlayer_Stage1::CPlayer_Stage1()
 {
 	m_bJump = false;
 	bLineCol = false;
-	m_fPower= 0.f;
+	m_fPower = 0.f;
 	fY = 0.f;
 	m_fAngleSpeed = 0.f;
 	m_iHp = 0;
@@ -89,11 +89,16 @@ void CPlayer_Stage1::Key_Input()
 				CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, Create_Bullet<CShotgunBullet>());
 			}
 			break;
-			
+
 		default:
 			m_iBulletChageNumber = 0;
 			break;
 		}
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Down('G'))
+	{
+		CGameMgr::Get_Instance()->SetStage(STAGE_2);
 	}
 }
 
@@ -179,10 +184,6 @@ void CPlayer_Stage1::Initialize()
 
 int CPlayer_Stage1::Update()
 {
-	/*if (m_bDead)
-		return OBJ_DEAD;*/
-
-
 	Key_Input();
 
 	__super::Update_Rect();

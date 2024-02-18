@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Line.h"
 #include "ScrollMgr.h"
-
+#include "GameMgr.h"
 CLine::CLine() : m_Type(NORMAL_LINE), m_dRadian(0)
 {
 }
@@ -58,12 +58,12 @@ void CLine::Initialize()
 
 void CLine::Late_Update()
 {
-	m_tLineInfo.tLeft.fX -= 3.f;
-	m_tLineInfo.tRight.fX -= 3.f;
-	 
-	if (m_tLineInfo.tRight.fX < -3629)
-	{
+	m_tLineInfo.tLeft.fX += 3.f;
+	m_tLineInfo.tRight.fX += 3.f;
 
+	if (m_tLineInfo.tRight.fX < 3629)
+	{
+		CGameMgr::Get_Instance()->SetStage(STAGE_3);
 	}
 }
 

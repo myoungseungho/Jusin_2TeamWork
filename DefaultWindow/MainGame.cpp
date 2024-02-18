@@ -117,7 +117,7 @@ void CMainGame::Update()
 void CMainGame::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-
+	CLineMgr::Get_Instance()->Late_Update();
 	switch (m_CurrentStage)
 	{
 	case STAGE_1:

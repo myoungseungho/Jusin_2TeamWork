@@ -21,12 +21,15 @@ void CLineMgr::Initialize(void)
 
 void CLineMgr::Late_Update()
 {
-	for (auto& iter : m_Linelist)
-		iter->Late_Update();
-	for (auto& iter : m_Rectlist)
-		iter->Late_Update();
-	for (auto& iter : m_Trianglelist)
-		iter->Late_Update();
+	if (CGameMgr::Get_Instance()->GetCurrentStage() == STAGE_2)
+	{
+		for (auto& iter : m_Linelist)
+			iter->Late_Update();
+		for (auto& iter : m_Rectlist)
+			iter->Late_Update();
+		for (auto& iter : m_Trianglelist)
+			iter->Late_Update();
+	}
 }
 
 void CLineMgr::Render(HDC hDC)
@@ -39,6 +42,7 @@ void CLineMgr::Render(HDC hDC)
 
 	for (auto& iter : m_Rectlist)
 		iter->Render(hDC);
+
 	for (auto& iter : m_Trianglelist)
 		iter->Render(hDC);
 }
