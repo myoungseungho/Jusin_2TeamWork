@@ -65,16 +65,11 @@ void CPlayer::Release()
 	float fY(0.f);
 
 	if (GetAsyncKeyState(VK_RIGHT))
-	{
 		m_tInfo.fX += m_fSpeed;
-
-		/*if (CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY))
-			m_tInfo.fY = fY;*/
-	}
 
 	if (GetAsyncKeyState(VK_LEFT))
 	{
-		m_tInfo.fX -= m_fSpeed;
+		//m_tInfo.fX -= m_fSpeed;
 
 		/*if (CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY))
 			m_tInfo.fY = fY;*/

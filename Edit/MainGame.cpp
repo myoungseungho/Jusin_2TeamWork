@@ -50,7 +50,6 @@ void CMainGame::Render()
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);	
 
 	CLineMgr::Get_Instance()->Render(m_hDC);	
-
 }
 
 void CMainGame::Release()

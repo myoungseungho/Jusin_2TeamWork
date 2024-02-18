@@ -6,7 +6,7 @@ class CLine
 {
 public:
 	CLine();
-	CLine(LINEPOINT& _tLeft, LINEPOINT& _tRight);
+	CLine(MAPPOINT& _tLeft, MAPPOINT& _tRight);
 	CLine(LINEINFO& tInfo);
 	~CLine();
 
@@ -14,10 +14,10 @@ public:
 	virtual void		Render(HDC hDC);
 
 public:
-	const LINEINFO&		Get_Info() const { return m_tInfo; }
+	const LINEINFO&		Get_Info() const { return m_tLineInfo; }
 
 
 private:
-	LINEINFO		m_tInfo;
+	LINEINFO		m_tLineInfo;
 };
 

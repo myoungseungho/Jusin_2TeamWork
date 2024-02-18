@@ -1,7 +1,6 @@
 #pragma once
 #include "Obj.h"
 #include "Player_Stage1.h"
-
 class CPlayer : public CObj
 {
 public:
@@ -30,14 +29,13 @@ protected:
 	template<typename T>
 	CObj* Create_Bullet();
 
-protected:
+	list<CObj*>* m_pBullet;
+	list<CObj*>* m_pShield;
 
 	bool			m_bJump;
 	bool			m_bDownJump;
 	float			m_fPower;
 	float			m_fTime;
 
-
 	CObj* m_pPlayer_Stage1;
-
 };

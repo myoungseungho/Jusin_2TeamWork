@@ -7,13 +7,13 @@ CLine::CLine()
 {
 }
 
-CLine::CLine(LINEPOINT & _tLeft, LINEPOINT & _tRight)
-	: m_tInfo(_tLeft, _tRight)
+CLine::CLine(MAPPOINT& _tLeft, MAPPOINT& _tRight)
+	: m_tLineInfo(_tLeft, _tRight)
 {
 }
 
 CLine::CLine(LINEINFO& tInfo)
-	: m_tInfo(tInfo)
+	: m_tLineInfo(tInfo)
 {
 }
 
@@ -26,6 +26,7 @@ void CLine::Render(HDC hDC)
 {
 	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 
-	MoveToEx(hDC, (int)m_tInfo.tLeft.fX + iScrollX, (int)m_tInfo.tLeft.fY, NULL);
-	LineTo(hDC, (int)m_tInfo.tRight.fX + iScrollX, (int)m_tInfo.tRight.fY);
+	MoveToEx(hDC, (int)m_tLineInfo.tLeft.fX + iScrollX, (int)m_tLineInfo.tLeft.fY, NULL);
+	LineTo(hDC, (int)m_tLineInfo.tRight.fX + iScrollX, (int)m_tLineInfo.tRight.fY);
+
 }

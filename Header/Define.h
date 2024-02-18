@@ -55,7 +55,7 @@ enum ITEMID
 	ITEM_END
 };
 
-enum DIRECTION2
+enum DIRECTION_LINE
 {
 	LEFT, RIGHT, END
 };
@@ -71,6 +71,16 @@ enum LINETYPE
 	NORMAL_LINE,
 	WALL_LINE_RightUp,
 	WALL_LINE_RightDown,
+}
+
+enum DIRECTION_RECT
+{
+	LEFTTOP, RIGHTBOTTOM, RECT_END
+};
+
+enum DIRECTION_TRIANGLE
+{
+	TOP, TRIANGLE_L, TRIANGLE_R, TRIANGLE_END
 };
 
 typedef struct tagInfo
@@ -88,26 +98,49 @@ typedef struct tagPoint
 	float fY;
 }FLOATPOINT;
 
-typedef struct tagLinePoint
+typedef struct tagMapPoint
 {
 	float		fX;
 	float		fY;
 
-	tagLinePoint() { ZeroMemory(this, sizeof(tagLinePoint)); }
-	tagLinePoint(float _fX, float _fY) : fX(_fX), fY(_fY) {}
+	tagMapPoint() { ZeroMemory(this, sizeof(tagMapPoint)); }
+	tagMapPoint(float _fX, float _fY) : fX(_fX), fY(_fY) {}
 
-}LINEPOINT;
+}MAPPOINT;
 
 typedef	struct tagLineInfo
 {
-	LINEPOINT	tLeft;
-	LINEPOINT	tRight;
+	MAPPOINT	tLeft;
+	MAPPOINT	tRight;
 
 	tagLineInfo() { ZeroMemory(this, sizeof(tagLineInfo)); }
-	tagLineInfo(LINEPOINT& _tLeft, LINEPOINT& _tRight)
+	tagLineInfo(MAPPOINT& _tLeft, MAPPOINT& _tRight)
 		: tLeft(_tLeft), tRight(_tRight) { }
 
 }LINEINFO;
+
+typedef	struct tagRectInfo
+{
+	MAPPOINT tLeftTop;
+	MAPPOINT tRightBottom;
+
+	tagRectInfo() { ZeroMemory(this, sizeof(tagRectInfo)); }
+	tagRectInfo(MAPPOINT& _tLeftTop, MAPPOINT& _tRightBottom)
+		: tLeftTop(_tLeftTop), tRightBottom(_tRightBottom){ }
+
+}RECTINFO;
+
+typedef	struct tagTriangleInfo
+{
+	MAPPOINT tTop;
+	MAPPOINT tLeftBottom_t;
+	MAPPOINT tRightBottom_t;
+
+	tagTriangleInfo() { ZeroMemory(this, sizeof(tagTriangleInfo)); }
+	tagTriangleInfo(MAPPOINT& _tTop, MAPPOINT& _tLeftBottom_t, MAPPOINT& _tRightBottom_t)
+		: tTop(_tTop), tLeftBottom_t(_tLeftBottom_t), tRightBottom_t(_tRightBottom_t) { }
+
+}TRIANGLEINFO;
 
 template<typename T>
 void Safe_Delete(T& Temp)

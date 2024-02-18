@@ -28,6 +28,12 @@
     <Filter Include="03. ScrollMgr">
       <UniqueIdentifier>{4df1bfa9-2d0d-4b50-ada6-03381176bd51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. LineMgr\Rect">
+      <UniqueIdentifier>{28fa8771-69af-46fc-82bf-736b6daf04a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. LineMgr\Triangle">
+      <UniqueIdentifier>{8534e85c-ba2c-4108-8ca1-48ae1d48fb2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -60,8 +66,11 @@
     <ClInclude Include="ScrollMgr.h">
       <Filter>03. ScrollMgr</Filter>
     </ClInclude>
-    <ClInclude Include="Line_Item.h">
-      <Filter>01. LineMgr\Line</Filter>
+    <ClInclude Include="Rect.h">
+      <Filter>01. LineMgr\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>01. LineMgr\Triangle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,8 +95,11 @@
     <ClCompile Include="ScrollMgr.cpp">
       <Filter>03. ScrollMgr</Filter>
     </ClCompile>
-    <ClCompile Include="Line_Item.cpp">
-      <Filter>01. LineMgr\Line</Filter>
+    <ClCompile Include="Rect.cpp">
+      <Filter>01. LineMgr\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>01. LineMgr\Triangle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
