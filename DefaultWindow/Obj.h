@@ -20,6 +20,8 @@ public:
 
 	void		Set_Dir(DIRECTION eDir) { m_eDir = eDir; }
 
+	void		Set_Time(float _fTime) { m_fTime = _fTime; }
+
 	RECT		Get_Rect() { return m_tRect; }
 	void		Set_Dead() { m_bDead = true;  }
 	void		Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
@@ -49,5 +51,6 @@ protected:
 	bool		m_bDead;
 
 	CObj*		m_pTarget;
+	float		m_fTime;
 };
 

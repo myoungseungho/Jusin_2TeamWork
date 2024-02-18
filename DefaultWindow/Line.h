@@ -8,16 +8,18 @@ public:
 	CLine();
 	CLine(LINEPOINT& _tLeft, LINEPOINT& _tRight);
 	CLine(LINEINFO& tInfo);
-	~CLine();
+	virtual ~CLine();
 
 public:
-	void		Render(HDC hDC);
+	virtual void		Initialize();
+	virtual void		Render(HDC hDC);
 
 public:
 	const LINEINFO&		Get_Info() const { return m_tInfo; }
 
 
-private:
+protected:
 	LINEINFO		m_tInfo;
+	LINETYPE		m_Type;
 };
 

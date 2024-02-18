@@ -10,9 +10,11 @@
 #include "KeyMgr.h"
 #include "ScrollMgr.h"
 
+
 CPlayer::CPlayer()
-	: m_pBullet(nullptr), m_pShield(nullptr)
+//: m_pBullet(nullptr), m_pShield(nullptr)
 {
+	m_pPlayer_Stage1 = nullptr;
 }
 
 CPlayer::~CPlayer()
@@ -22,61 +24,48 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize()
 {
-	m_tInfo  = {100.f, WINCY / 2.f, 100.f, 100.f };
-	m_fSpeed = 10.f;
+	m_tInfo = { 100.f, WINCY / 2.f, 25.f, 25.f };
+	m_fSpeed = 3.f;
 	m_fDistance = 100.f;
 	m_fPower = 20.f;
 	m_fTime = 0.f;
 	m_bJump = false;
+	m_bDownJump = false;
 }
 
 int CPlayer::Update()
 {
-	Key_Input();
-	
 	__super::Update_Rect();
-
 	return OBJ_NOEVENT;
 }
 
 void CPlayer::Late_Update()
 {
-	// degree to radian
-
-	//m_tPosin.x = LONG(m_tInfo.fX + m_fDistance * cos(m_fAngle * (PI / 180.f)));
-	//m_tPosin.y = LONG(m_tInfo.fY - m_fDistance * sin(m_fAngle * (PI / 180.f)));
-
-	Jump();
 	OffSet();
 }
 
 void CPlayer::Render(HDC hDC)
 {
-
-	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-
-	Rectangle(hDC, 
-			m_tRect.left + iScrollX,
-			m_tRect.top, 
-			m_tRect.right + iScrollX,
-			m_tRect.bottom);
-
-	// 포신
-//	MoveToEx(hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
-	//LineTo(hDC, (int)m_tPosin.x, (int)m_tPosin.y);
-
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	Rectangle(hDC,
+		m_tRect.left + iScrollX,
+		m_tRect.top,
+		m_tRect.right + iScrollX,
+		m_tRect.bottom);
 }
 
 void CPlayer::Release()
 {
+	Safe_Delete<CObj*>(m_pPlayer_Stage1);
 }
 
-void CPlayer::Key_Input()
-{	
+
+	void CPlayer::Key_Input()
+{
 	float fY(0.f);
 
 	if (GetAsyncKeyState(VK_RIGHT))
-	{ 
+	{
 		m_tInfo.fX += m_fSpeed;
 
 		/*if (CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY))
@@ -97,11 +86,11 @@ void CPlayer::Key_Input()
 	}
 }
 
-void CPlayer::Jump()
+//점프가 너무 광범위한 함수로 구성되어있음.
+void CPlayer::HandleMove()
 {
-	float	fY(0.f);
-
-	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
+	float	fY = Get_Info().fY;
+	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line_Stage3(m_tInfo.fX, &fY);
 
 	if (m_bJump)
 	{
@@ -124,8 +113,8 @@ void CPlayer::Jump()
 
 void CPlayer::OffSet()
 {
-	int	iOffSetMinX = 100.f;
-	int	iOffSetMaxX = 700.f;
+	int	iOffSetMinX = 100;
+	int	iOffSetMaxX = 700;
 
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 
@@ -136,9 +125,10 @@ void CPlayer::OffSet()
 		CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
 }
 
+
 CObj * CPlayer::Create_Shield()
 {
-	CObj*	pObj = CAbstractFactory<CShield>::Create();
+	CObj* pObj = CAbstractFactory<CShield>::Create();
 	pObj->Set_Target(this);
 
 	return pObj;
@@ -147,7 +137,7 @@ CObj * CPlayer::Create_Shield()
 template<typename T>
 CObj* CPlayer::Create_Bullet()
 {
-	CObj*	pObj = CAbstractFactory<T>::Create((float)m_tPosin.x, (float)m_tPosin.y, m_fAngle);
-	
+	CObj* pObj = CAbstractFactory<T>::Create((float)m_tPosin.x, (float)m_tPosin.y, m_fAngle);
+
 	return pObj;
 }

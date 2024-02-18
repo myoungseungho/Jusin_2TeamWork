@@ -19,5 +19,8 @@ private:
 	float		m_fRotAngle;
 	float		m_fRotSpeed;
 	bool		m_bStart;
+
+	int m_iScrollX;
+	DWORD m_fDeleteTimer;
 };
 

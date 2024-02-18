@@ -22,10 +22,5 @@ private:
 	int				m_iFPS;
 	TCHAR			m_szFPS[16];
 
-#pragma region 복습
-	//CObj*		m_pPlayer;
-	//list<CObj*>	m_BulletList;
-#pragma endregion 복습
-	
 };
 

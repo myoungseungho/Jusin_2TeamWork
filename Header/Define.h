@@ -11,9 +11,22 @@
 
 #define			VK_MAX		0xff
 
+const wchar_t STAGE_1_MAP_PATH[32] = L"../Data/Line1.dat";
+const wchar_t STAGE_2_MAP_PATH[32] = L"../Data/Line2.dat";
+const wchar_t STAGE_3_MAP_PATH[32] = L"../Data/Line3.dat";
+const wchar_t STAGE_3_Item_MAP_PATH[32] = L"../Data/Line_Item_3.dat";
+
+enum STAGE
+{
+	STAGE_NONE = -1,
+	STAGE_1,
+	STAGE_2,
+	STAGE_3,
+	STAGE_END
+};
 enum DIRECTION
 {
-	DIR_LEFT, 
+	DIR_LEFT,
 	DIR_UP,
 	DIR_RIGHT,
 	DIR_DOWN,
@@ -27,9 +40,19 @@ enum OBJID
 	OBJ_PLAYER,
 	OBJ_BULLET,
 	OBJ_MONSTER,
+	OBJ_MONSTERBULLET,
 	OBJ_MOUSE,
 	OBJ_SHIELD,
+	OBJ_ITEM,
+	OBJ_SPAWN,
 	OBJ_END
+};
+
+enum ITEMID
+{
+	ITEM_HEAL,
+	ITEM_BULLET,
+	ITEM_END
 };
 
 enum DIRECTION2
@@ -37,6 +60,17 @@ enum DIRECTION2
 	LEFT, RIGHT, END
 };
 
+enum LINEEDITMODE
+{
+	LINEMODE,
+	LINE_ITEM_MODE
+};
+
+enum LINETYPE
+{
+	NORMAL_LINE,
+	WALL_LINE,
+};
 
 typedef struct tagInfo
 {
@@ -46,6 +80,12 @@ typedef struct tagInfo
 	float		fCY;		// 세로 사이즈
 
 }INFO;
+
+typedef struct tagPoint
+{
+	float fX;
+	float fY;
+}FLOATPOINT;
 
 typedef struct tagLinePoint
 {
@@ -79,3 +119,4 @@ void Safe_Delete(T& Temp)
 }
 
 extern HWND		g_hWnd;
+
