@@ -26,23 +26,23 @@ public:
 	CObj* Get_Player()
 	{
 		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
-		return m_ObjList[iCurrentStage][OBJ_PLAYER].front();
+		return m_ObjList[OBJ_PLAYER].front();
 	}
 	CObj* Get_Item_Stage1()
 	{
 		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
-		return m_ObjList[iCurrentStage][OBJ_ITEM].front();
+		return m_ObjList[OBJ_ITEM].front();
 	}
 	CObj* Get_Bullet_Stage1()
 	{
 		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
-		return m_ObjList[iCurrentStage][OBJ_BULLET].front();
+		return m_ObjList[OBJ_BULLET].front();
 	}
 
 	list<CObj*> GetObjList(OBJID eID) 
 	{
 		int iCurrentStage = CGameMgr::Get_Instance()->GetCurrentStage();
-		return m_ObjList[iCurrentStage][eID];
+		return m_ObjList[eID];
 	}
 #pragma endregion
 
@@ -65,7 +65,7 @@ public:
 	}
 
 private:
-	list<CObj*>		m_ObjList[STAGE_END][OBJ_END];
+	list<CObj*>		m_ObjList[OBJ_END];
 	static CObjMgr* m_pInstance;
 };
 

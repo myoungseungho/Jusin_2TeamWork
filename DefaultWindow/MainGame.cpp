@@ -13,7 +13,7 @@
 #include "GameMgr.h"
 #include "Spawn.h"
 
-CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr), m_CurrentStage(STAGE_1), m_bIsStageInit(false)
+CMainGame::CMainGame() : m_hDC(nullptr), m_iFPS(0), m_dwTime(GetTickCount()), m_pStage1(nullptr), m_pStage2(nullptr), m_pStage3(nullptr), m_CurrentStage(STAGE_3), m_bIsStageInit(false)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }
@@ -36,7 +36,7 @@ void CMainGame::Initialize()
 	if (m_pStage3 == nullptr)
 		m_pStage3 = new CStage3;
 
-	m_pStage3->Initialize();
+	m_pStage1->Initialize();
 }
 
 void CMainGame::Update()
@@ -74,6 +74,7 @@ void CMainGame::Update()
 			{
 				m_CurrentStage = STAGE_3;
 				CObjMgr::Get_Instance()->Release();
+				CLineMgr::Get_Instance()->Release();
 				m_bIsStageInit = true;
 				break;
 			}
@@ -92,12 +93,22 @@ void CMainGame::Update()
 			{
 				m_CurrentStage = STAGE_END;
 				CObjMgr::Get_Instance()->Release();
+				CLineMgr::Get_Instance()->Release();
 				m_bIsStageInit = true;
 				break;
 			}
 			return;
-		default:
-			break;
+			case STAGE_END:
+				if (m_bIsStageInit == true)
+				{
+					m_CurrentStage = STAGE_1;
+					Release();
+					CGameMgr::Get_Instance()->SetStage(STAGE_1);
+					Initialize();
+					m_bIsStageInit = false;
+				}
+
+			return;
 		}
 	}
 

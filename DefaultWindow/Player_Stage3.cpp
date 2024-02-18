@@ -2,6 +2,7 @@
 #include "Player_Stage3.h"
 #include "KeyMgr.h"
 #include "LineMgr.h"
+#include "GameMgr.h"
 CPlayer_Stage3::CPlayer_Stage3() : m_bHasTargetLine(false), m_fLineY(0.f), m_fGravity(9.8f), m_bReflectJump(false)
 {
 }
@@ -243,6 +244,11 @@ int CPlayer_Stage3::Update()
 {
 	CPlayer::Update();
 	Key_Input();
+
+	if (m_tInfo.fX > 100.f)
+	{
+		CGameMgr::Get_Instance()->SetStage(STAGE_END);
+	}
 
 	return OBJ_NOEVENT;
 }
